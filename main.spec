@@ -18,7 +18,8 @@ a = Analysis(['src\main\main.py'],
              cipher=block_cipher,
              noarchive=False)
 
-a.datas += [('server_logo.ico','icon\server_logo.ico','DATA')]
+a.datas += [('server_logo.ico','icon\server_logo.ico','DATA'),
+            ('version.rc','src\main\version.rc','DATA')]
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
@@ -33,6 +34,7 @@ exe = EXE(pyz,
           upx=False,
           console=True,
           icon='icon\server_logo.ico',
+          version='src\main\version.rc',
           disable_windowed_traceback=False,
           target_arch=None,
           codesign_identity=None,

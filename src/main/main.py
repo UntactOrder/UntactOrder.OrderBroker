@@ -40,6 +40,7 @@ class PosServer(object):
     __OS = ["", ""]  # [system, release]
     __IP = None
     __PORT = None
+    __SERVER_INFO = dict()
 
     def __init__(self):
         pass
@@ -111,8 +112,22 @@ class PosServer(object):
                 else:
                     cls.exit(-4, "윈도 7 이하 버전은 지원하지 않습니다. 아무키나 눌러 프로그램을 종료합니다. ")
 
+    @classmethod
+    def update_checker(cls):
+        print("\nServer Program Version Info :")
+        v_file = os.path.dirname(sys.argv[0]) + "\\version.rc"
+        with open(v_file, 'r') as f:
+            rc = f.read().replace("\n", "")
+            file_info = rc[rc.find("StringFileInfo"):rc.rfind("VarFileInfo")].replace(" ", "").replace("(u'", "('").replace(",u'", ", '")
+            table = file_info[file_info.rfind("[")+1:file_info.find("]")].replace("),", "").replace(")", "")
+            for struct in table.split("StringStruct(")[1:]:
+                key, val = struct.replace("'", "").split(", ")
+                cls.__SERVER_INFO[key] = val
+                print(key, cls.__SERVER_INFO[key])
+
 
 if __name__ == '__main__':
     PosServer.server_config_parser(__DEBUG)
     PosServer.os_checker()
+    PosServer.update_checker()
     getch()
