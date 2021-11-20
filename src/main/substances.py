@@ -6,6 +6,7 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 import os
 import sys
 import platform
+from rich import print
 from configparser import ConfigParser
 
 
@@ -112,7 +113,7 @@ class PosServer(object):
     @classmethod
     def update_checker(cls):
         print("\nServer Program Version Info :")
-        v_file = os.path.dirname(sys.argv[0]) + "\\resources\\version.rc"
+        v_file = os.path.dirname(sys.argv[0]) + "\\resource\\version.rc"
         with open(v_file, 'r') as f:
             rc = f.read().replace("\n", "")
             file_info = rc[rc.find("StringFileInfo"):rc.rfind("VarFileInfo")].replace(" ", "").replace("(u'", "('").replace(",u'", ", '")

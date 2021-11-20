@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.networklayers.application & Last Modded : 2021.11.07. ###
+### Alias : PosServer.networklayer.application & Last Modded : 2021.11.07. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 

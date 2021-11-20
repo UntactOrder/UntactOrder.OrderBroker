@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.dataclasses.orders & Last Modded : 2021.11.07. ###
+### Alias : PosServer.dataclass.orders & Last Modded : 2021.11.07. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 from menus import MenuList
