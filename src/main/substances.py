@@ -287,7 +287,7 @@ if __name__ == "__main__":
 
         try:
             csprint(locale.gettext('안녕'))
-        except Exception as e:
+        except Exception:
             print_traceback()
 
         PosServer.exit()
