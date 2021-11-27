@@ -31,7 +31,7 @@ class Menu(object):
 class MenuList(dict):
     """docstring for MenuList."""
 
-    _db = sqlite3.connect(os.getcwd()+"/resource/log/recent_run.log")
+    _db = sqlite3.connect(os.getcwd()+"/resource/data/menu.untactorder.db")
 
     @classmethod
     def get(cls):

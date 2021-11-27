@@ -101,7 +101,7 @@ class PosServer(object):
     def save_html(cls, path=None):
         """save program logs to html"""
         if path is None:
-            path = os.getcwd() + f"/resource/log/{datetime.datetime.now()}.html".replace(' ', '_').replace(':', '-')
+            path = os.getcwd() + f"/resource/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
         out("Log saved to %s" % path)
         log_console.save_html(path)
         if cls.__OS[0] == "Windows":
@@ -128,7 +128,7 @@ class PosServer(object):
             cls.__RUN_TYPE = "python " if os.path.splitext(sys.argv[0])[1] == ".py" else ""
         else:
             config = ConfigParser()
-            path = os.getcwd() + "/resource/setting.ini"
+            path = os.getcwd() + "/resource/setting.untactorder.ini"
             config.read(path)
             if 'SERVERINFO' not in config:
                 config.add_section('SERVERINFO')
