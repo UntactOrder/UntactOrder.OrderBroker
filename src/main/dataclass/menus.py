@@ -3,6 +3,8 @@
 ### Alias : PosServer.dataclass.menus & Last Modded : 2021.11.07. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+import os
+import sqlite3
 
 
 class Menu(object):
@@ -28,6 +30,8 @@ class Menu(object):
 
 class MenuList(dict):
     """docstring for MenuList."""
+
+    _db = sqlite3.connect(os.getcwd()+"/resource/log/recent_run.log")
 
     @classmethod
     def get(cls):

@@ -15,6 +15,7 @@ if __name__ == '__main__':
         PosServer.server_config_parser(__DEBUG)
         PosServer.os_checker()
         PosServer.update_checker()
+
         pos = PosServer()
         pos.f()
     except Exception:
