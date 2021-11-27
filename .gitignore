@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# 단일 매장 전용 데이터
+#/src/main/resources/setting.ini
+/src/main/resources/data/
+/src/main/resources/log/
