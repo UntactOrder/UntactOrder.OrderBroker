@@ -16,8 +16,6 @@ import datetime
 import platform
 from configparser import ConfigParser
 
-__INTELLIJ = False
-
 from rich import print
 from rich.traceback import install as install_traceback
 from rich.markdown import Markdown
@@ -30,7 +28,7 @@ from rich.table import Table
 from rich.live import Live
 
 install_traceback()
-sys.stderr = sys.stderr if __INTELLIJ else open(os.getcwd()+"/resource/log/recent_run.log", "wt")
+sys.stderr = open(os.getcwd()+"/resource/log/recent_run.log", "wt")
 
 theme = Theme({'success': "green", 'error': "bold red"})
 log_console = Console(theme=theme, record=True, stderr=True)
@@ -68,6 +66,9 @@ def out(msg="", to=None):
     if to is None:
         to = (csprint, log)
     [f(msg) for f in to]
+
+
+from dataclass.menus import MenuList
 
 
 class PosServer(object):
@@ -197,6 +198,9 @@ class PosServer(object):
                 cls.__SERVER_INFO[key] = val
                 out(f"{key} {cls.__SERVER_INFO[key]}")
 
+    @staticmethod
+    def print_menu_version():
+        out("Menu Version Info: " + MenuList.get_menu_version())
 
     def f(self):
         import curses
