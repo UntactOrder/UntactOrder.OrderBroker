@@ -93,22 +93,22 @@ class CustomerGroup(dict):
 
     def sign_in(self, socket, addr, id, pw):
         if self[id].sign_in(pw):
+            log(f"[CUSTOMER:{addr}] sign_in - ok")
             self[id].set_socket(socket, addr)
             net_data = ([], [])  # (send_queue, recv_queue)
             self.__networking_data[id] = net_data
             self.__executor.submit(self.manage_orders, self[id], net_data)
-            log(f"[CUSTOMER:{addr}] sign_in - ok")
             return "ok"
         else:
             log(f"[CUSTOMER:{addr}] sign_in - wrong_pw")
             return "wrong_pw"
 
     def sign_up(self, socket, addr, id, pw):
+        log(f"[CUSTOMER:{addr}] sign_ip - ok")
         self[id] = Customer(socket, addr, id, pw)
         net_data = ([], [])  # (send_queue, recv_queue)
         self.__networking_data[id] = net_data
         self.__executor.submit(self.manage_orders, self[id], net_data)
-        log(f"[CUSTOMER:{addr}] sign_ip - ok")
         return "ok"
 
     def check_id(self, id):
@@ -127,13 +127,18 @@ class CustomerGroup(dict):
 
     def manage_orders(self, user, net_data):
         log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Started.")
-        send_thread = Thread(target=send_continually, args=(user.get_socket(), user.get_addr(), net_data[0]))
-        recv_thread = Thread(target=recv_continually, args=(user.get_socket(), user.get_addr(), net_data[1]))
+        self.__executor.submit(send_continually, user.get_socket(), user.get_addr(), net_data[0])
+        self.__executor.submit(recv_continually, user.get_socket(), user.get_addr(), net_data[1])
+        #send_thread = Thread(target=send_continually, args=(user.get_socket(), user.get_addr(), net_data[0]))
+        #recv_thread = Thread(target=recv_continually, args=(user.get_socket(), user.get_addr(), net_data[1]))
         while True:
+            #log(f"[CUSTOMER:{user.get_addr()}] Try to get request.")
             data = get_request(recv_queue=net_data[1])
-            if data == -1:
+            if data == -1 or -1 in net_data[0]:
+                log(f"[CUSTOMER:{user.get_addr()}] User Connection is Lost.")
                 break
             elif data is not None:
+                log(f"[CUSTOMER:{user.get_addr()}] Data Received.")
                 process = process_request(data, send_queue=net_data[0])
                 req, rep = next(process)
                 match req:
@@ -151,6 +156,7 @@ class CustomerGroup(dict):
                         req['time'] = ordr_id
                         req['status'] = status
                         next(process)
+                        break  # 주문 하나가 끝나면 연결 해제
             else:
                 time.sleep(0)  # Thread.yield()
         net_data[0].append(-1)
@@ -160,8 +166,8 @@ class CustomerGroup(dict):
             log(f"[CUSTOMER:{user.get_addr()}] Customer Object Deleted.")
             del self[id]
         del self.__networking_data[id]
-        send_thread.join()
-        recv_thread.join()
+        #send_thread.join()
+        #recv_thread.join()
         log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Terminated.")
 
 
