@@ -18,8 +18,6 @@ if __name__ == "__main__":
 
 from console import *
 
-DEBUG = True
-
 __server_socket = None
 __accept_terminated = False
 
@@ -71,25 +69,16 @@ def terminate_accept():
 
 
 def send(sokt, addr, jsn):
-    try:
-        sokt.sendall(jsn)
-    except TimeoutError:
-        log(f"[SESSION:{addr}] send timeout ----")
-        raise TimeoutError
-    if DEBUG:
-        log(f"[SESSION:{addr}] send finished")
+    sokt.sendall(jsn)
+    log(f"[SESSION:{addr}] send finished")
 
 
 def recv(sokt, addr):
-    try:
-        data = sokt.recv(4096)
-    except TimeoutError:
-        log(f"[SESSION:{addr}] send timeout ----")
-        raise TimeoutError
+    data = sokt.recv(4096)
     if not data:  # 빈 문자열 수신시 연결을 끊어야 함
         data = -1
         log(f"[SESSION:{addr}] recv failed")
-    elif DEBUG:
+    else:
         log(f"[SESSION:{addr}] recv finished")
     return data
 
@@ -97,64 +86,27 @@ def recv(sokt, addr):
 def send_continually(sokt, addr, send_queue):
     log(f"[SESSION:{addr}] Order Management Thread - Send Started.")
     while -1 not in send_queue:
-        if is_socket_closed(sokt):
-            log(f"[SESSION:{addr}] send_con - socket closed")
-            send_queue.append(0)
-        elif len(send_queue) > 0:
+        if len(send_queue) > 0:
             log(f"[SESSION:{addr}] send_con - send data found")
             jsn = send_queue.pop(0)
-            try:
-                log(f"[SESSION:{addr}] send_con - send start")
-                sokt.settimeout(5)
-                send(sokt, addr, jsn)
-                log(f"[SESSION:{addr}] send_con - send finished")
-            except TimeoutError:
-                log(f"[SESSION:{addr}] send_con - send timeout")
-                send_queue.insert(0, jsn)
-                continue
+            log(f"[SESSION:{addr}] send_con - send start")
+            send(sokt, addr, jsn)
+            log(f"[SESSION:{addr}] send_con - send finished")
         else:
-            log(f"[SESSION:{addr}] send_con - send data not found")
+            #log(f"[SESSION:{addr}] send_con - send data not found")
             time.sleep(0)  # Thread.yield()
 
 
 def recv_continually(sokt, addr, recv_queue):
     log(f"[SESSION:{addr}] Order Management Thread - Recv Started.")
     while -1 not in recv_queue:
-        if is_socket_closed(sokt):
-            log(f"[SESSION:{addr}] recv_con - socket closed")
-            data = -1
-        else:
-            try:
-                log(f"[SESSION:{addr}] recv_con - recv start")
-                sokt.settimeout(5)
-                data = recv(sokt, addr)
-                log(f"[SESSION:{addr}] recv_con - recv finished")
-            except TimeoutError:
-                log(f"[SESSION:{addr}] recv_con - recv timeout")
-                continue
+        log(f"[SESSION:{addr}] recv_con - recv start")
+        data = recv(sokt, addr)
+        log(f"[SESSION:{addr}] recv_con - recv finished")
         recv_queue.append(data)
-
-
-def is_socket_closed(sokt) -> bool:
-    try:
-        # this will try to read bytes without blocking and also without removing them from buffer (peek only)
-        sokt.setblocking(0)  # data = sokt.recv(16, MSG_DONTWAIT | MSG_PEEK)
-        data = sokt.recv(16)
-        sokt.setblocking(1)
-        if len(data) == 0:
-            return True
-    except BlockingIOError:
-        return False  # socket is open and reading from it would block
-    except ConnectionResetError:
-        return True  # socket was closed for some other reason
-    except Exception as e:
-        log(">> unexpected exception when checking if a socket is closed")
-        return False
-    return False
 
 
 def sokt_close(sokt, addr):
     if sokt is not None:
         sokt.close()
-    if DEBUG:
-        log(f"[SESSION:{addr}] socket closed.")
+    log(f"[SESSION:{addr}] socket closed.")

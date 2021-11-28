@@ -42,12 +42,15 @@ if __name__ == "__main__":
     import sys
     sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
+from console import log
 from networklayer.session import sokt_close
 import networklayer.presentation as pr
 
 
 def sign_in(cus_group, sokt, addr):
+    log(f"[SIGNIN:{addr}] GET Table Method.")
     for i in (0, 1, 2):
+        log(f"[SIGNIN:{addr}] GET Table Method - ({i+1}/3).")
         data = pr.get_request(sokt, addr)
         table = -1
         status = ""
@@ -57,63 +60,79 @@ def sign_in(cus_group, sokt, addr):
                 status = cus_group.check_id(table)
                 pr.respond(data, status, sokt, addr)
                 if status in ("ok", "none"):
+                    log(f"[SIGNIN:{addr}] GET Table Method - success.")
                     break
         except Exception:
             pass
         if i == 2 or status in ("multi", "disabled", "null"):
+            log(f"[SIGNIN:{addr}] SIGNIN Method - failed.")
             sokt_close(sokt, addr)
     if status == "none":
         sign_up(cus_group, table, sokt, addr)
     elif status == "ok":
+        log(f"[SIGNIN:{addr}] SIGNIN Method.")
         for i in (0, 1, 2):  # 비밀번호 입력은 3번 시도 가능
+            log(f"[SIGNIN:{addr}] SIGNIN Method - ({i+1}/3).")
             data = pr.get_request(sokt, addr)
             try:
                 if data['method'] == 'run' and data['uri'] == 'sign_in':
                     status = cus_group.sign_in(sokt, addr, table, data['value']['pw'])
-                    data['value'] = data['value']['__id']
+                    data['value'] = data['value']['id']
                     pr.respond(data, status, sokt, addr)
                     if status == "ok":
+                        log(f"[SIGNIN:{addr}] SIGNIN Method - success.")
                         return
             except Exception:
                 pass
             if i == 2:
+                log(f"[SIGNIN:{addr}] SIGNIN Method - failed.")
                 sokt_close(sokt, addr)
 
 
 def sign_up(cus_group, table, sokt, addr):
+    log(f"[SIGNIN:{addr}] SIGNUP Method.")
     data = pr.get_request(sokt, addr)
     try:  # 테이블 네임의 get 요청 외에 모든 요청을 무시, 3회 시도 이후 연결 해제
         if data['method'] == 'run' and data['uri'] == 'sign_up':
             status = cus_group.sign_up(sokt, addr, table, data['value']['pw'])
             data['value'] = data['value']['id']
             pr.respond(data, status, sokt, addr)
+            log(f"[SIGNIN:{addr}] SIGNUP Method - success.")
             return
     except Exception:
         pass
+    log(f"[SIGNIN:{addr}] SIGNUP Method - failed.")
     sokt_close(sokt, addr)
 
 
 get_request = pr.get_request
 
 
-def process_request(requested, respond_data=None, send_queue=None):
-    """파라미터가 이상한 요청을 확인하여 무시해야 함"""
+def process_request(addr, requested, respond_data=None, send_queue=None):
+    """파라 미터가 이상한 요청을 확인 하여 무시 해야 함"""
     try:
         if respond_data is None:
+            log(f"[PROCESS_REQ:{addr}] Generator Method.")
             respond_data = {}
             match requested['method']:
                 case 'get':
                     if requested['uri'] == '/data/menu':
+                        log(f"[PROCESS_REQ:{addr}] Yielded - GET_MENU.")
                         yield 'GET_MENU', respond_data
+                        log(f"[PROCESS_REQ:{addr}] Resume - GET_MENU.")
                         pr.respond(requested, respond_data['menu'], send_queue=send_queue)
                     elif '/customer/' in requested['uri']:
                         if 'orderlist' == requested['uri'].split('/')[3]:
+                            log(f"[PROCESS_REQ:{addr}] Yielded - GET_ORDRLST.")
                             yield 'GET_ORDRLST', respond_data
+                            log(f"[PROCESS_REQ:{addr}] Resume - GET_ORDRLST.")
                             pr.respond(requested, respond_data['ordrlst'], send_queue=send_queue)
                 case 'put':
                     if requested['uri'] == 'new_order':
                         if type(requested['value']) == dict:
+                            log(f"[PROCESS_REQ:{addr}] Yielded - PUT_NORDR.")
                             yield 'PUT_NORDR', respond_data
+                            log(f"[PROCESS_REQ:{addr}] Resume - PUT_NORDR.")
                             requested['value'] = respond_data['time']
                             pr.respond(requested, respond_data['status'], send_queue=send_queue)
         else:

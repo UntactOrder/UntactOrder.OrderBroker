@@ -11,6 +11,7 @@ if __name__ == "__main__":
     import sys
     sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
+from console import log
 from dataclass.menus import MenuList
 get_menu = MenuList.get_menu_by_index
 
@@ -40,28 +41,35 @@ class OrderList(list):
        고객 전화번호별 데이터베이스 관리
     """
 
-    def __init__(self):
+    def __init__(self, user_id):
         super(OrderList, self).__init__()
+        self.user_id = user_id
 
     def make_new_order(self, ordr):
         """주문 아이디 중복 여부 확인 필요함"""
-        _id = id = f"ordr{datetime.datetime.now()}".replace(' ', '').replace(':', '').replace('-', '').replace('.', '')
+        log(f"[ORDRLST] NEW ORDER from TABLE {self.user_id}.")
+        _oid = oid = f"ordr{datetime.datetime.now()}".replace(' ', '').replace(':', '').replace('-', '').replace('.', '')
+        log(f"[ORDRLST] Temporary order id = {_oid}.")
         # 데이터베이스에 중복 아이디 있는지 검사
         sequence_num = 0
         while True:
-            if _id in Order.ids:
-                _id = id + f"s{sequence_num}"
+            if _oid in Order.ids:
+                log(f"[ORDRLST] {_oid} is already exists.")
+                _oid = oid + f"s{sequence_num}"
                 sequence_num += 1
             else:
-                Order.ids.append(_id)
-                id = _id
+                Order.ids.append(_oid)
+                log(f"[ORDRLST] Order id setted : {_oid}.")
+                oid = _oid
                 break
-        try:  # 메뉴 개수가 이상하거나 한 경우
-            self.append(Order(id, ordr))
+        try:
+            self.append(Order(oid, ordr))
+            log(f"[ORDRLST] Order Object successfully added.")
             stat = "success"
-        except Exception:
+        except Exception:  # 메뉴 개수가 이상하거나 한 경우
+            log(f"[ORDRLST] Order Object addition failed.")
             stat = "fail"
-        return id, stat
+        return oid, stat
 
     def set_data_to_db(self):
         pass

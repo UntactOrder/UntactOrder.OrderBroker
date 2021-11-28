@@ -66,7 +66,7 @@ def get(uri, sokt=None, addr=None, send_queue=None):
 
 
 def put(uri, value, sokt=None, addr=None, send_queue=None):
-    data = dic2jsn({'method': 'put', 'uri': value, 'value': value})
+    data = dic2jsn({'method': 'put', 'uri': uri, 'value': value})
     if send_queue is None:
         if sokt is None or addr is None:
             raise ValueError
