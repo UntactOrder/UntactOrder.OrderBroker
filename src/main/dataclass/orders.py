@@ -21,11 +21,14 @@ class Order(dict):
 
     ids = []
 
-    def __init__(self, id, ordr):
+    def __init__(self, oid, ordr):
         super(Order, self).__init__(ordr)
-        self.__id: str = id
+        self.__id: str = oid
         self.__price: int = 0
         for menu_id, count in self.items():
+            if int(count) == 0:
+                del self[menu_id]
+                continue
             menu = get_menu(int(menu_id))
             self.__price += menu.get_price() * int(count)
 
@@ -63,13 +66,15 @@ class OrderList(list):
                 oid = _oid
                 break
         try:
-            self.append(Order(oid, ordr))
+            new_ordr = Order(oid, ordr)
+            self.append(new_ordr)
             log(f"[ORDRLST] Order Object successfully added.")
             stat = "success"
         except Exception:  # 메뉴 개수가 이상하거나 한 경우
+            new_ordr = None
             log(f"[ORDRLST] Order Object addition failed.")
             stat = "fail"
-        return oid, stat
+        return oid, stat, new_ordr
 
     def set_data_to_db(self):
         pass

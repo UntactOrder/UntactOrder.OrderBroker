@@ -11,6 +11,7 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import os
 import sys
+import time
 import datetime
 import platform
 from threading import Thread
@@ -22,6 +23,7 @@ from dataclass.menus import MenuList
 from dataclass.customers import CustomerGroup
 from networklayer.session import manage_connections
 from networklayer.session import terminate_accept
+from networklayer.session import close_server
 
 
 class PosServer(object):
@@ -43,6 +45,7 @@ class PosServer(object):
     def quit(self):
         """quit server"""
         terminate_accept()
+        close_server()
         try:
             self.__accept_thread.join()
         except RuntimeError:
@@ -168,33 +171,90 @@ class PosServer(object):
     def run_server(self):
         self.__accept_thread.start()
 
-    def run_ui(self):
-        self.f()
-
-    def f(self):
+    def run_order_popup(self):
         while True:
-            pass
+            if len(self.__popup_queue) > 0:
+                msg = ""
+                for menu_id, count in (self.__popup_queue.pop(0)).items():
+                    pass
+                    #menu = get_menu(int(menu_id))
+                    #self.__price += menu.get_price() * int(count)
+                    #msg += MenuList[int(menu_id)]
+
+    def run_pos_cui(self):
+        popup_thread = Thread(target=self.run_order_popup)
+        popup_thread.daemon = True
+        popup_thread.start()
+
+        import json
+        from urllib.request import urlopen
+        self.index = 0
+
+        def get_content(user, repeat):
+            """Extract text from user dict."""
+            country = user["location"]["country"]
+            name = f"{user['name']['first']} {user['name']['last']}"
+            string = f"[b]{name}[/b]\n[yellow]{country}"
+            for i in range(repeat):
+                string = string + f"\n{country}"
+            return string
+
+        def generate() -> Columns:
+            """Make a new table."""
+            user_renderables = [Panel(get_content(user, self.index), expand=True) for user in users]
+            return Columns(user_renderables)
+
+        users = json.loads(urlopen("https://randomuser.me/api/?results=30").read())["results"]
+
+        with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
+            csprint("종료하려면 여기를 누르세요!")
+            for row in range(50):
+                time.sleep(1)
+                self.index = row%2
+                live.update(generate())
+                log(f"{row}", f"description {row}", "[red]ERROR")
+
+
+
+        """
         import curses
-
         screen = curses.initscr()
-        # curses.noecho()
+        curses.noecho()
         curses.curs_set(0)
-        screen.keypad(1)
+        screen.keypad(True)
         curses.mousemask(curses.ALL_MOUSE_EVENTS)
+        #screen.addstr("종료(ESC)")
 
-        screen.addstr("This is a Sample Curses Script\n\n")
+        def pos_cui() -> Columns:
+            user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{total_price}", expand=False) for table_id, total_price in self.__customer_group.items()]
+            return Columns(user_renderables)
 
-        key = 0
-        while key != 27:  # Esc to close
-            key = screen.getch()
-            # screen.erase()
-            if key == curses.KEY_MOUSE:
-                _, mx, my, _, _ = curses.getmouse()
-                y, x = screen.getyx()
-                screen.addstr('mx, my = %i,%i                \r' % (mx, my))
-            screen.refresh()
+        with Live(refresh_per_second=1, console=console) as live:
+            csprint("종료(ESC)                                                                                결제(p)")
+            key = 0
+            while key != 27:  # Esc to close
+                time.sleep(0.4)
+                live.update(pos_cui())
+                #key = screen.getch()
+                #screen.erase()
+                
+                if key == curses.KEY_MOUSE:
+                    _, mx, my, _, _ = curses.getmouse()
+                    #screen.addstr('mx, my = %i,%i                \r' % (mx, my))
+                    if my == 0:
+                        if 0 <= mx <= 8:
+                            break
+                        elif 89 <= mx <= 95:
+                            self.process_payment()
+                elif key == 'p':
+                    self.process_payment()
+                #screen.refresh()
+                """
+        #curses.endwin()
 
-        curses.endwin()
+    def process_payment(self):
+        pass
+        #self.__customer_group.process_payment()
 
 
 if __name__ == "__main__":

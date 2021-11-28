@@ -21,7 +21,9 @@ if __name__ == '__main__':
         # server start
         pos = PosServer()
         pos.run_server()
-        pos.run_ui()
+        import os
+        os.system("cls")
+        pos.run_pos_cui()
 
         # server close
         pos.quit()

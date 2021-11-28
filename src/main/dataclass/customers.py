@@ -32,6 +32,7 @@ class Customer(object):
         self.__id = user_id
         self.__pw = pw
         self.__orderlist: OrderList = OrderList(user_id)
+        self.__total_price: int = 0
 
     def get_order_list(self):
         return self.__orderlist
@@ -56,7 +57,9 @@ class Customer(object):
         return self.__addr
 
     def make_new_order(self, ordr):
-        return self.__orderlist.make_new_order(ordr)
+        new_ordr = self.__orderlist.make_new_order(ordr)
+        self.__total_price += new_ordr.get_price()
+        return new_ordr
 
     def disconnect(self):
         sokt_close(self.__socket, self.__addr)
@@ -78,7 +81,7 @@ class CustomerGroup(dict):
         self.__networking_data = {}
         self.__executor = ThreadPoolExecutor()
         self.__popup_queue = popup_queue
-        self.__table_range = 10  # 테이블 개수 설정 (1번~10번) - ini 파일에 따라 자동 세팅
+        self.__table_range = 10  # 테이블 개수 설정 (1번~10번) - db 읽어서 자동 세팅
         self.__disabled_table = []  # 비 활성화 되어 있는 테이블 번호
         self.get_table_from_db()
 
@@ -151,9 +154,10 @@ class CustomerGroup(dict):
                         next(process)
                     case 'PUT_NORDR':
                         log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread : PUT_NORDR")
-                        ordr_id, status = user.make_new_order(data['value'])
+                        ordr_id, status, new_ordr = user.make_new_order(data['value'])
                         resp['time'] = ordr_id
                         resp['status'] = status
+                        self.__popup_queue.append(new_ordr)
                         next(process)
             else:
                 time.sleep(0)  # Thread.yield()
@@ -165,6 +169,9 @@ class CustomerGroup(dict):
             del self[user_id]
         del self.__networking_data[user_id]
         log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Terminated.")
+
+    def process_payment(self):
+        pass
 
 
 if __name__ == "__main__":
