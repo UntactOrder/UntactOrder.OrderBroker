@@ -36,8 +36,14 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 * recv : respond = {"requested": {"method": "put", "uri": "new_order", "value": "2021.11.18 22:08"}, "respond": "success"}
                    * * @author 유채민
 """
-from session import sokt_close
-import presentation as pr
+
+if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from networklayer.session import sokt_close
+import networklayer.presentation as pr
 
 
 def sign_in(cus_group, sokt, addr):

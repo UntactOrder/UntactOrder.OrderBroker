@@ -5,7 +5,13 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import datetime
 import sqlite3
-from menus import MenuList
+
+if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from dataclass.menus import MenuList
 get_menu = MenuList.get_menu_by_index
 
 

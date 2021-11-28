@@ -5,21 +5,28 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import json
 
-from ..main import DEBUG
-from session import send
-from session import recv
+if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from console import *
+from networklayer.session import send
+from networklayer.session import recv
+
+DEBUG = True
 
 
 def jsn2dic(jsn):
     dic = json.loads(jsn)
     if DEBUG:
-        print(f"[JSN2DIC] {dic}")
+        log(f"[JSN2DIC] {dic}")
     return dic
 
 
 def dic2jsn(dic):
     if DEBUG:
-        print(f"[DIC2JSN] {dic}")
+        log(f"[DIC2JSN] {dic}")
     return json.dumps(dic).encode('UTF-8')
 
 

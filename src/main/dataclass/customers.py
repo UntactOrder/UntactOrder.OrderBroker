@@ -9,13 +9,18 @@ import sqlite3
 from threading import Thread
 from concurrent.futures import ThreadPoolExecutor
 
-from menus import MenuList
-from orders import OrderList
-from ..networklayer.session import sokt_close
-from ..networklayer.session import send_continually
-from ..networklayer.session import recv_continually
-from ..networklayer.application import get_request
-from ..networklayer.application import process_request
+if __name__ == "__main__":
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from console import *
+from dataclass.menus import MenuList
+from dataclass.orders import OrderList
+from networklayer.session import sokt_close
+from networklayer.session import send_continually
+from networklayer.session import recv_continually
+from networklayer.application import get_request
+from networklayer.application import process_request
 
 
 class Customer(object):
@@ -83,36 +88,8 @@ class CustomerGroup(dict):
 
     def get_table_from_db(self):
         """꼭 한번은 호출해야 함"""
-        config = self.config
-        config.read(self.CONFIGPATH)
-        if 'MENUINFO' not in config:
-            config.add_section('MENUINFO')
-        try:
-            self._CURRENT_MENU_VERSION = config['MENUINFO']['VERSION']
-        except KeyError:
-            input("주문 메뉴 버전 설정 데이터가 없습니다. 엔터를 눌러 가장 마지막에 생성된 버전으로 설정합니다. 다른 버전을 사용하기를 원하는 경우 서버 실행후 설정을 변경해주세요! : ")
-
-        with sqlite3.connect(self._LOCATION) as db:
-            new_menu_setted = False
-            cur = db.cursor()  # 커서 바인딩
-            if self._CURRENT_MENU_VERSION is None:
-                cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
-                tables = [table[0] for table in cur.fetchall() if table[0] != 'sqlite_sequence']
-                tables.sort()
-                try:
-                    self._CURRENT_MENU_VERSION = tables[-1]
-                except IndexError:
-                    self.make_new_menus()
-                    self._CURRENT_MENU_VERSION = self.set_menus_to_db()
-                    new_menu_setted = True
-                config.set('MENUINFO', 'VERSION', self._CURRENT_MENU_VERSION)
-                with open(self.CONFIGPATH, "wt") as fp:
-                    config.write(fp)
-
-            if not new_menu_setted:
-                cur.execute("CREATE TABLE IF NOT EXISTS "+cls._CURRENT_MENU_VERSION+cls._COLUMNS_INIT)
-                cur.execute(f"SELECT * from {cls._CURRENT_MENU_VERSION}")
-                [cls.__MENUS.append(Menu(*read)) for read in cur.fetchall()]
+        self.__table_range = 15
+        log(f"[CUSTOMER] 테이블 수 {self.__table_range}로 설정됨")
 
     def sign_in(self, socket, addr, id, pw):
         if self[id].sign_in(pw):
@@ -120,8 +97,10 @@ class CustomerGroup(dict):
             net_data = ([], [])  # (send_queue, recv_queue)
             self.__networking_data[id] = net_data
             self.__executor.submit(self.manage_orders, self[id], net_data)
+            log(f"[CUSTOMER:{addr}] sign_in - ok")
             return "ok"
         else:
+            log(f"[CUSTOMER:{addr}] sign_in - wrong_pw")
             return "wrong_pw"
 
     def sign_up(self, socket, addr, id, pw):
@@ -129,6 +108,7 @@ class CustomerGroup(dict):
         net_data = ([], [])  # (send_queue, recv_queue)
         self.__networking_data[id] = net_data
         self.__executor.submit(self.manage_orders, self[id], net_data)
+        log(f"[CUSTOMER:{addr}] sign_ip - ok")
         return "ok"
 
     def check_id(self, id):
@@ -146,6 +126,7 @@ class CustomerGroup(dict):
             return "null"
 
     def manage_orders(self, user, net_data):
+        log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Started.")
         send_thread = Thread(target=send_continually, args=(user.get_socket(), user.get_addr(), net_data[0]))
         recv_thread = Thread(target=recv_continually, args=(user.get_socket(), user.get_addr(), net_data[1]))
         while True:
@@ -157,12 +138,15 @@ class CustomerGroup(dict):
                 req, rep = next(process)
                 match req:
                     case 'GET_MENU':
+                        log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread : GET_MENU")
                         rep['menu'] = MenuList.to_dict()
                         next(process)
                     case 'GET_ORDRLST':
+                        log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread : GET_ORDRLST")
                         rep['ordrlst'] = user.get_order_list().to_dict()
                         next(process)
                     case 'PUT_NORDR':
+                        log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread : PUT_NORDR")
                         ordr_id, status = user.make_new_order(data['value'])
                         req['time'] = ordr_id
                         req['status'] = status
@@ -173,10 +157,12 @@ class CustomerGroup(dict):
         user.disconnect()
         id = user.get_id()
         if len(user.get_order_list()) < 1:
+            log(f"[CUSTOMER:{user.get_addr()}] Customer Object Deleted.")
             del self[id]
         del self.__networking_data[id]
         send_thread.join()
         recv_thread.join()
+        log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Terminated.")
 
 
 if __name__ == "__main__":

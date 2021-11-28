@@ -11,7 +11,14 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from socket import socket as Socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 
-from ..main import DEBUG
+if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from console import *
+
+DEBUG = True
 
 __server_socket = None
 __accept_terminated = False
@@ -19,15 +26,15 @@ __accept_terminated = False
 
 def init_server():
     """initialize Server Socket"""
-    from ..substances import PosServer
+    from substances import PosServer
     global __server_socket
     __server_socket = Socket(AF_INET, SOCK_STREAM)
     __server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    print("[SESSION] WinError 수정 완료")
+    log("[SESSION] WinError 수정 완료")
     __server_socket.bind(PosServer.get_server_addr())  # 커널에 바인드.
-    print("[SESSION] Bind 성공")
+    log("[SESSION] Bind 성공")
     __server_socket.listen()  # 접속 대기.
-    print("[SESSION] Listen 시작")
+    log("[SESSION] Listen 시작")
 
 
 def close_server():
@@ -41,7 +48,7 @@ def accept_continuously(connected):
         init_server()
     while not __accept_terminated:
         client_socket, client_addr = __server_socket.accept()
-        print(f"[SESSION] 클라이언트({client_addr})가 연결 되었습니다.")
+        log(f"[SESSION] 클라이언트({client_addr})가 연결 되었습니다.")
         connected.append((client_socket, client_addr))
 
 
@@ -49,11 +56,12 @@ def manage_connections(cus_group):
     signin_pool = ThreadPoolExecutor()
     connected = []
     signin_pool.submit(accept_continuously, connected)
-    from application import sign_in
+    from networklayer.application import sign_in
     while not __accept_terminated:
-        if len(connected) > 1:
+        if len(connected) > 0:
             client_socket, client_addr = connected.pop(0)
             signin_pool.submit(sign_in, cus_group, client_socket, client_addr)
+            log(f"[SESSION] ({client_addr}) is in signin_pool.")
     signin_pool.shutdown(wait=True)
 
 
@@ -65,16 +73,16 @@ def terminate_accept():
 def send(sokt, addr, jsn):
     sokt.sendall(jsn)
     if DEBUG:
-        print(f">>[SESSION:{addr}] send finished")
+        log(f"[SESSION:{addr}] send finished")
 
 
 def recv(sokt, addr):
     data = sokt.recv(4096)
     if not data:  # 빈 문자열 수신시 연결을 끊어야 함
         data = -1
-        print(f">>[SESSION:{addr}] recv failed")
+        log(f"[SESSION:{addr}] recv failed")
     elif DEBUG:
-        print(f">>[SESSION:{addr}] recv finished")
+        log(f"[SESSION:{addr}] recv finished")
     return data
 
 
@@ -97,4 +105,4 @@ def sokt_close(sokt, addr):
     if sokt is not None:
         sokt.close()
     if DEBUG:
-        print(f">>[SESSION:{addr}] socket closed.")
+        log(f"[SESSION:{addr}] socket closed.")
