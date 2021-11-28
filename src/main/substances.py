@@ -186,33 +186,15 @@ class PosServer(object):
         popup_thread.daemon = True
         popup_thread.start()
 
-        import json
-        from urllib.request import urlopen
-        self.index = 0
-
-        def get_content(user, repeat):
-            """Extract text from user dict."""
-            country = user["location"]["country"]
-            name = f"{user['name']['first']} {user['name']['last']}"
-            string = f"[b]{name}[/b]\n[yellow]{country}"
-            for i in range(repeat):
-                string = string + f"\n{country}"
-            return string
-
-        def generate() -> Columns:
-            """Make a new table."""
-            user_renderables = [Panel(get_content(user, self.index), expand=True) for user in users]
+        def pos_cui() -> Columns:
+            user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{total_price}", expand=False) for table_id, total_price in self.__customer_group.items()]
             return Columns(user_renderables)
 
-        users = json.loads(urlopen("https://randomuser.me/api/?results=30").read())["results"]
-
         with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
-            csprint("종료하려면 여기를 누르세요!")
-            for row in range(50):
-                time.sleep(1)
-                self.index = row%2
-                live.update(generate())
-                log(f"{row}", f"description {row}", "[red]ERROR")
+            csprint("종료(ESC)                                                                                              결제(p)")
+            for row in range(5):
+                time.sleep(0.4)
+                live.update(pos_cui())
 
 
 
