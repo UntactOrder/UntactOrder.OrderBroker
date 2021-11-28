@@ -7,72 +7,94 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
                https://leo-bb.tistory.com/54
                https://hamait.tistory.com/833
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-import socket
+import time
 from concurrent.futures import ThreadPoolExecutor
-import json
+from socket import socket as Socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
+
+from ..main import DEBUG
+
+__server_socket = None
+__accept_terminated = False
 
 
-def manage_connections(sokt):
-    num = 10
-    while True:
-        input_tmp = input('전송할 데이터를 입력하세요 : ')
-        data = {'name': 'client', 'contents': input_tmp, 'num': num}
-        print("send: name: {0}, contents: {1}, num: {2}".format(data['name'], data['contents'], data['num']))
-        sokt.sendall(json.dumps(data).encode('UTF-8'))
-        print(">> send finished")
-
-        data = sokt.recv(4096)
-        print(">> recv finished")
-        data = json.loads(data)
-        print("receive: name: {0}, contents: {1}, num: {2}".format(data['name'], data['contents'], data['num']))
-
-        num = int(data['num']) + 1
-    sokt.close()
+def init_server():
+    """initialize Server Socket"""
+    from ..substances import PosServer
+    global __server_socket
+    __server_socket = Socket(AF_INET, SOCK_STREAM)
+    __server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    print("[SESSION] WinError 수정 완료")
+    __server_socket.bind(PosServer.get_server_addr())  # 커널에 바인드.
+    print("[SESSION] Bind 성공")
+    __server_socket.listen()  # 접속 대기.
+    print("[SESSION] Listen 시작")
 
 
-def client():
-    try:
-        print('클라이언트 동작')
-        # initialize Socket
-        SERVER_ADDR = ('127.0.0.1', 50000)
-
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-            client.connect(SERVER_ADDR)
-            print('서버에 연결 되었습니다.')
-
-            manage_connections(client)
-
-    except Exception as e:
-        print(e)
-        input_tmp = input('아무거나 눌러서 종료')
+def close_server():
+    global __server_socket
+    sokt_close(__server_socket, "SERVER")
 
 
-def server():
-    executor = ThreadPoolExecutor()
-    try:
-        print('서버 동작')
-        # initialize Socket
-        HOST = '127.0.0.1'  # localhost
-        PORT = 51000  # 1~65535
-
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
-            server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            print("WinError 수정 완료")
-            server_socket.bind((HOST, PORT))  # 커널에 바인드.
-            print("Bind 성공")
-            server_socket.listen()  # 접속 대기.
-            print("Listen 시작")
-
-            while True:
-                client_socket, addr = server_socket.accept()  # 클라이언트 소켓 리턴.
-                print('클라이언트가 연결 되었습니다.')
-
-                executor.submit(manage_connections, client_socket)
-
-    except Exception as e:
-        print(e)
-        input_tmp = input('아무거나 눌러서 종료')
+def accept_continuously(connected):
+    global __server_socket
+    if __server_socket is None:
+        init_server()
+    while not __accept_terminated:
+        client_socket, client_addr = __server_socket.accept()
+        print(f"[SESSION] 클라이언트({client_addr})가 연결 되었습니다.")
+        connected.append((client_socket, client_addr))
 
 
-if __name__=='__main__':
-    server()
+def manage_connections(cus_group):
+    signin_pool = ThreadPoolExecutor()
+    connected = []
+    signin_pool.submit(accept_continuously, connected)
+    from application import sign_in
+    while not __accept_terminated:
+        if len(connected) > 1:
+            client_socket, client_addr = connected.pop(0)
+            signin_pool.submit(sign_in, cus_group, client_socket, client_addr)
+    signin_pool.shutdown(wait=True)
+
+
+def terminate_accept():
+    global __accept_terminated
+    __accept_terminated = True
+
+
+def send(sokt, addr, jsn):
+    sokt.sendall(jsn)
+    if DEBUG:
+        print(f">>[SESSION:{addr}] send finished")
+
+
+def recv(sokt, addr):
+    data = sokt.recv(4096)
+    if not data:  # 빈 문자열 수신시 연결을 끊어야 함
+        data = -1
+        print(f">>[SESSION:{addr}] recv failed")
+    elif DEBUG:
+        print(f">>[SESSION:{addr}] recv finished")
+    return data
+
+
+def send_continually(sokt, addr, send_queue):
+    while -1 not in send_queue:
+        if len(send_queue) > 0:
+            jsn = send_queue.pop(0)
+            send(sokt, addr, jsn)
+        else:
+            time.sleep(0)  # Thread.yield()
+
+
+def recv_continually(sokt, addr, recv_queue):
+    while -1 not in recv_queue:
+        data = recv(sokt, addr)
+        recv_queue.append(data)
+
+
+def sokt_close(sokt, addr):
+    if sokt is not None:
+        sokt.close()
+    if DEBUG:
+        print(f">>[SESSION:{addr}] socket closed.")

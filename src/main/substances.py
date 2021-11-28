@@ -14,6 +14,7 @@ import os
 import sys
 import datetime
 import platform
+from threading import Thread
 from configparser import ConfigParser
 
 from rich import print
@@ -69,6 +70,9 @@ def out(msg="", to=None):
 
 
 from dataclass.menus import MenuList
+from dataclass.customers import CustomerGroup
+from networklayer.session import manage_connections
+from networklayer.session import terminate_accept
 
 
 class PosServer(object):
@@ -83,11 +87,17 @@ class PosServer(object):
     __SERVER_INFO = dict()
 
     def __init__(self):
-        pass
+        self.__popup_queue = []
+        self.__customer_group = CustomerGroup(self.__popup_queue)
+        self.__accept_thread = Thread(target=manage_connections, args=(self.__customer_group, ))
 
     def quit(self):
-        """quit server and exit program"""
-        self.exit()
+        """quit server"""
+        terminate_accept()
+        try:
+            self.__accept_thread.join()
+        except RuntimeError:
+            pass
 
     @staticmethod
     def exit(error_code=0, prompt="Press any key to exit program. "):
@@ -199,8 +209,18 @@ class PosServer(object):
                 out(f"{key} {cls.__SERVER_INFO[key]}")
 
     @staticmethod
-    def print_menu_version():
-        out("Menu Version Info: " + MenuList.get_menu_version())
+    def print_menu_version(detailed=False):
+        out("Menu Version Info: "+MenuList.get_menu_version(detailed))
+
+    @classmethod
+    def get_server_addr(cls):
+        return cls.__IP, cls.__PORT
+
+    def run_server(self):
+        self.__accept_thread.start()
+
+    def run_ui(self):
+        self.f()
 
     def f(self):
         import curses

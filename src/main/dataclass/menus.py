@@ -14,28 +14,46 @@ class Menu(object):
 
     def __init__(self, id, name, price, menutype, pinned, soldout=False, available=True):
         super(Menu, self).__init__()
-        self.available: bool = True if available else False
-        self.soldout: bool = True if soldout else False
-        self.pinned: bool = pinned
-        self.id: str = id
-        self.name: str = name
-        self.price: int = price
-        self.type: str = menutype
+        self.__available: int = 1 if available else 0
+        self.__soldout: int = 1 if soldout else 0
+        self.__pinned: int = 1 if pinned else 0
+        self.__id: str = id
+        self.__name: str = name
+        self.__price: int = price
+        self.__type: str = menutype
+
+    def is_available(self):
+        return self.__available
+
+    def is_soldout(self):
+        return self.__soldout
 
     def set_pinned(self, pinned=True):
-        self.pinned: bool = pinned
+        self.__pinned: int = 1 if pinned else 0
+
+    def get_price(self):
+        return self.__price
 
     def change_price(self, to):
-        self.price: int = to
+        self.__price: int = to
+
+    def get_type(self):
+        return self.__type
 
     def change_type(self, to):
-        self.type: str = to
+        self.__type: str = to
+
+    def get_name(self):
+        return self.__name
 
     def rename(self, new_name):
-        self.name: str = new_name
+        self.__name: str = new_name
+
+    def get_id(self):
+        return self.__id
 
     def get_info(self):
-        return self.id, self.name, self.price, self.type, 1 if self.pinned else 0, 1 if self.soldout else 0, 1 if self.available else 0
+        return self.__id, self.__name, self.__price, self.__type, 1 if self.__pinned else 0, 1 if self.__soldout else 0, 1 if self.__available else 0
 
 
 class MenuList(object):
@@ -45,10 +63,9 @@ class MenuList(object):
     """
 
     config = ConfigParser()
-    CONFIGPATH = os.getcwd() + "/resource/setting.untactorder.ini"
-    print(CONFIGPATH)
+    CONFIGPATH = (os.getcwd() if __name__ != "__main__" else "..") + "/resource/setting.untactorder.ini"
     __MENUS = []
-    _LOCATION = os.getcwd() + "/resource/data/menus.untactorder.db"
+    _LOCATION = (os.getcwd() if __name__ != "__main__" else "..") +  "/resource/data/menus.untactorder.db"
     print(_LOCATION)
     _COLUMNS_INIT = "(id integer PRIMARY KEY autoincrement, name text, price integer, type text, pinned integer, soldout integer, available integer)"
     _COLUMNS = "(name, price, type, pinned, soldout, available)"
@@ -89,8 +106,16 @@ class MenuList(object):
                 [cls.__MENUS.append(Menu(*read)) for read in cur.fetchall()]
 
     @classmethod
-    def get_menu_version(cls) -> str:
-        return cls._CURRENT_MENU_VERSION if cls._CURRENT_MENU_VERSION is not None else "Not Initialized"
+    def get_menu_version(cls, detailed=False) -> str:
+        string = cls._CURRENT_MENU_VERSION if cls._CURRENT_MENU_VERSION is not None else "Not Initialized"
+        if detailed:
+            for menu in cls.__MENUS:
+                string += f"\n{menu.get_info()}"
+        return string
+
+    @classmethod
+    def get_menu_by_index(cls, index):
+        return cls.__MENUS[index]
 
     @classmethod
     def make_new_menus(cls):
@@ -121,12 +146,18 @@ class MenuList(object):
             return tablename
 
     @classmethod
-    def to_json(cls):
-        pass
+    def to_dict(cls):
+        dic = {}
+        for menu in cls.__MENUS:
+            if menu.is_soldout() or not menu.is_available():
+                continue
+            cur = dic[menu.get_id()] = dict()
+            _, cur['name'], cur['price'], cur['type'], cur['pinned'], _, _ = menu.get_info()
+        return dic
 
 
 MenuList.get_menu_from_db()
 
 
-if __name__ == "__main":
-    print("Menu Version Info: " + MenuList.get_menu_version())
+if __name__ == "__main__":
+    print(MenuList.get_menu_version(detailed=True))
