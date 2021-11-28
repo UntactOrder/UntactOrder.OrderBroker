@@ -7,7 +7,7 @@ from substances import print
 from substances import print_traceback
 from substances import PosServer
 
-DEBUG = True
+DEBUG = False
 
 
 if __name__ == '__main__':

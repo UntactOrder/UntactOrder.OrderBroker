@@ -192,7 +192,7 @@ class PosServer(object):
 
         with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
             csprint("종료(ESC)                                                                                              결제(p)")
-            for row in range(5):
+            for row in range(500000000):
                 time.sleep(0.4)
                 live.update(pos_cui())
 

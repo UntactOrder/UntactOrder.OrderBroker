@@ -57,9 +57,9 @@ class Customer(object):
         return self.__addr
 
     def make_new_order(self, ordr):
-        new_ordr = self.__orderlist.make_new_order(ordr)
-        self.__total_price += new_ordr.get_price()
-        return new_ordr
+        result = self.__orderlist.make_new_order(ordr)
+        self.__total_price += result[-1].get_price()
+        return result
 
     def disconnect(self):
         sokt_close(self.__socket, self.__addr)
