@@ -55,6 +55,9 @@ def get_request(sokt=None, addr=None, recv_queue=None):
                 return -1
 
 
+get_repond = get_request
+
+
 def get(uri, sokt=None, addr=None, send_queue=None):
     data = dic2jsn({'method': 'get', 'uri': uri})
     if send_queue is None:
