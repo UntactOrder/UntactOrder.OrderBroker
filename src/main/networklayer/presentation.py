@@ -5,14 +5,9 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import json
 
-if __name__ == "__main__":
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
-from console import *
-from networklayer.session import send
-from networklayer.session import recv
+from src.main.console import *
+from src.main.networklayer.session import send
+from src.main.networklayer.session import recv
 
 DEBUG = True
 
@@ -55,7 +50,7 @@ def get_request(sokt=None, addr=None, recv_queue=None):
                 return -1
 
 
-get_repond = get_request
+get_respond = get_request
 
 
 def get(uri, sokt=None, addr=None, send_queue=None):

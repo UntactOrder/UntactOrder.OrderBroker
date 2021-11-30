@@ -6,13 +6,8 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 import datetime
 import sqlite3
 
-if __name__ == "__main__":
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
-from console import log
-from dataclass.menus import MenuList
+from src.main.console import log
+from src.main.dataclass.menus import MenuList
 get_menu = MenuList.get_menu_by_index
 
 
@@ -41,7 +36,7 @@ class Order(dict):
 
 class OrderList(list):
     """docstring for OrderList.
-       고객 전화번호별 데이터베이스 관리
+       고객 전화 번호 별 데이터 베이스 관리
     """
 
     def __init__(self, user_id):
@@ -87,15 +82,15 @@ class OrderList(list):
 
 
 if __name__ == '__main__':
-    lst = OrderList()
+    lst = OrderList("1")
     ordr = {"0": "2", "1": "1", "2": "1"}
-    id, status = lst.make_new_order(ordr)
-    print(f"id={id}, status={status}")
+    _id, status, new_ordr = lst.make_new_order(ordr)
+    print(f"id={_id}, status={status}")
     print(lst.get_total_price())
     print(lst.to_dict())
 
     ordr = {"0": "1", "1": "1", "2": "0"}
-    id, status = lst.make_new_order(ordr)
-    print(f"id={id}, status={status}")
+    _id, status, new_ordr = lst.make_new_order(ordr)
+    print(f"id={_id}, status={status}")
     print(lst.get_total_price())
     print(lst.to_dict())

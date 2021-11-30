@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.substances & Last Modded : 2021.11.07. ###
+### Alias : PosServer.substances & Last Modded : 2021.11.29. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 참고: [rich] https://www.youtube.com/watch?v=4zbehnz-8QU
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import os
 import sys
-
-if __name__ == "__main__":
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 from rich import print
 from rich.traceback import install as install_traceback
@@ -22,7 +19,8 @@ from rich.table import Table
 from rich.live import Live
 
 install_traceback()
-sys.stderr = open(os.getcwd()+"/resource/log/recent_run.log", "wt")
+sys.stderr = open(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
+                  + "/resource/log/recent_run.log", "wt")
 
 theme = Theme({'success': "green", 'error': "bold red"})
 log_console = Console(theme=theme, record=True, stderr=True)
@@ -37,6 +35,7 @@ try:
 except ModuleNotFoundError:
     import tty
     import termios
+
 
     def getch(char_width=1):
         """get a fixed number of typed characters from the terminal. Linux / Mac only

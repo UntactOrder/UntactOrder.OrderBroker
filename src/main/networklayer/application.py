@@ -2,16 +2,14 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ### Alias : PosServer.networklayer.application & Last Modded : 2021.11.07. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-"""
-* <응용계층>
-* 데이터가공 매서드 호출.
-* qr에서 테이블번호받기 -> 로그인요청 -> 테이블번호에대해 비밀번호 등록여부확인
+* <응용 계층>
+* 데이터 가공 매서드 호출.
+* qr 에서 테이블 번호 받기 -> 로그인 요청 -> 테이블 번호에 대해 비밀 번호 등록 여부 확인
 * send to server : {"method": "get", "uri": "/customer/TABLE_NAME"}
 * * recv : respond = {"requested": {"method": "get", "uri": "/customer/TABLE_NAME"},
                       *                     "respond": "ok|none|multi|null|disabled"}
 * }
-* 등록x -> 등록하기(비밀번호 새로생성,보내기)
+* 등록x -> 등록 하기(비밀 번호 새로 생성, 보내기)
 * (3번 반복)등록o -> 일치 ->
 * send to server : {"method": "run", "uri": "sign_up|sign_in", "value": {
     *                   "id": TABLE_NAME, "pw": PASSWORD
@@ -19,7 +17,7 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
                    * * recv : respond = {"requested": {"method": "run", "uri": "sign_up|sign_in", "value": TABLE_NAME},
 *                     "respond": "ok|wrong_pw"}
 * }
-* 일치or등록 -> 메뉴 요청 및 받아오기(서버)
+* 일치 or 등록 -> 메뉴 요청 및 받아 오기(서버)
                     * send to server : {"method": "get", "uri": "/data/menu"}
                                        * recv : respond = {"requested": {"method": "get", "uri": "/data/menu"},
                                                            *             "respond": "{
@@ -28,23 +26,16 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 *                     "1": {"name": "새우 베이컨 필라프", "price": "13500", "pinned":"true"}
 *                 }
 *             }"}
-               * -> 고른메뉴 보내기(서버로)
+               * -> 고른 메뉴 보내기(서버로)
                          * send to server : {"method": "put", "uri": "new_order", "value": {
 *     "메인": {"0": "2", "1": "1", "2": "1"},
 *     "사이드": {"0": "2", "1": "1", "2": "1"}
 * }}
-* recv : respond = {"requested": {"method": "put", "uri": "new_order", "value": "2021.11.18 22:08"}, "respond": "success"}
-                   * * @author 유채민
-"""
-
-if __name__ == "__main__":
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
-from console import log
-from networklayer.session import sokt_close
-import networklayer.presentation as pr
+* recv : respond = {"requested": {"method": "put", "uri": "new_order", "value": "202111182208"}, "respond": "success"}
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+from src.main.console import log
+from src.main.networklayer.session import sokt_close
+import src.main.networklayer.presentation as pr
 
 
 def sign_in(cus_group, sokt, addr):
@@ -64,14 +55,14 @@ def sign_in(cus_group, sokt, addr):
                     break
         except Exception:
             pass
-        if i == 2 or status in ("multi", "disabled", "null"):
+        if i == 2 or status in ("multi", "disabled", "null") or data == -1:
             log(f"[SIGNIN:{addr}] SIGNIN Method - failed.")
             sokt_close(sokt, addr)
     if status == "none":
         sign_up(cus_group, table, sokt, addr)
     elif status == "ok":
         log(f"[SIGNIN:{addr}] SIGNIN Method.")
-        for i in (0, 1, 2):  # 비밀번호 입력은 3번 시도 가능
+        for i in (0, 1, 2):  # 비밀 번호 입력은 3번 시도 가능
             log(f"[SIGNIN:{addr}] SIGNIN Method - ({i+1}/3).")
             data = pr.get_request(sokt, addr)
             try:
@@ -84,7 +75,7 @@ def sign_in(cus_group, sokt, addr):
                         return
             except Exception:
                 pass
-            if i == 2:
+            if i == 2 or data == -1:
                 log(f"[SIGNIN:{addr}] SIGNIN Method - failed.")
                 sokt_close(sokt, addr)
 
@@ -92,7 +83,7 @@ def sign_in(cus_group, sokt, addr):
 def sign_up(cus_group, table, sokt, addr):
     log(f"[SIGNIN:{addr}] SIGNUP Method.")
     data = pr.get_request(sokt, addr)
-    try:  # 테이블 네임의 get 요청 외에 모든 요청을 무시, 3회 시도 이후 연결 해제
+    try:  # 테이블 네임의 get 요청 외에 모든 요청을 무시
         if data['method'] == 'run' and data['uri'] == 'sign_up':
             status = cus_group.sign_up(sokt, addr, table, data['value']['pw'])
             data['value'] = data['value']['id']

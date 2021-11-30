@@ -8,29 +8,25 @@ import time
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 
-if __name__ == "__main__":
-    import sys
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
-from console import log
-from dataclass.menus import MenuList
-from dataclass.orders import OrderList
-from networklayer.session import sokt_close
-from networklayer.session import send_continually
-from networklayer.session import recv_continually
-from networklayer.application import get_request
-from networklayer.application import process_request
+from src.main.console import log
+from src.main.dataclass.menus import MenuList
+from src.main.dataclass.orders import OrderList
+from src.main.networklayer.session import sokt_close
+from src.main.networklayer.session import send_continually
+from src.main.networklayer.session import recv_continually
+from src.main.networklayer.application import get_request
+from src.main.networklayer.application import process_request
 
 
 class Customer(object):
     """docstring for Customer."""
 
-    def __init__(self, socket, addr, user_id, pw):
+    def __init__(self, socket, addr, user_id: str, pw: str):
         super(Customer, self).__init__()
         self.__socket = socket
         self.__addr = addr
-        self.__id = user_id
-        self.__pw = pw
+        self.__id: str = user_id
+        self.__pw: str = pw
         self.__orderlist: OrderList = OrderList(user_id)
         self.__total_price: int = 0
 
@@ -56,6 +52,9 @@ class Customer(object):
     def get_addr(self):
         return self.__addr
 
+    def get_total_price(self):
+        return self.__total_price
+
     def make_new_order(self, ordr):
         result = self.__orderlist.make_new_order(ordr)
         self.__total_price += result[-1].get_price()
@@ -71,10 +70,10 @@ class CustomerGroup(dict):
        테이블 별 데이터 베이스 관리
     """
 
-    _LOCATION = (os.getcwd() if __name__ != "__main__" else "..") + "/resource/data/tables.untactorder.db"
+    _LOCATION = os.path.dirname(
+        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/data/tables.untactorder.db"
     print(_LOCATION)
-    _COLUMNS_INIT = "(id integer PRIMARY KEY autoincrement, name text, price integer, type text, pinned integer, soldout integer, available integer)"
-    _COLUMNS = "(name, price, type, pinned, soldout, available)"
+    _COLUMNS_INIT = "(id integer PRIMARY KEY, name text)"
 
     def __init__(self, popup_queue):
         super(CustomerGroup, self).__init__()
@@ -96,7 +95,7 @@ class CustomerGroup(dict):
         self.__table_range = 15
         log(f"[CUSTOMER] 테이블 수 {self.__table_range}로 설정됨")
 
-    def sign_in(self, socket, addr, user_id, pw):
+    def sign_in(self, socket, addr, user_id: str, pw: str):
         if self[user_id].sign_in(pw):
             log(f"[CUSTOMER:{addr}] sign_in - ok")
             self[user_id].set_socket(socket, addr)
@@ -108,7 +107,7 @@ class CustomerGroup(dict):
             log(f"[CUSTOMER:{addr}] sign_in - wrong_pw")
             return "wrong_pw"
 
-    def sign_up(self, socket, addr, user_id, pw):
+    def sign_up(self, socket, addr, user_id: str, pw: str):
         log(f"[CUSTOMER:{addr}] sign_ip - ok")
         self[user_id] = Customer(socket, addr, user_id, pw)
         net_data = ([], [])  # (send_queue, recv_queue)
@@ -116,8 +115,8 @@ class CustomerGroup(dict):
         self.__executor.submit(self.manage_orders, self[user_id], net_data)
         return "ok"
 
-    def check_id(self, user_id):
-        if 0 < user_id <= self.__table_range:
+    def check_id(self, user_id: str):
+        if 0 < int(user_id) <= self.__table_range:
             if user_id in self.__disabled_table:
                 return "disabled"
             elif user_id in self.keys():

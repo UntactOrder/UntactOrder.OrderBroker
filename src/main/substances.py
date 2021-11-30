@@ -17,13 +17,13 @@ import platform
 from threading import Thread
 from configparser import ConfigParser
 
-from console import *
+from src.main.console import *
 
-from dataclass.menus import MenuList
-from dataclass.customers import CustomerGroup
-from networklayer.session import manage_connections
-from networklayer.session import terminate_accept
-from networklayer.session import close_server
+from src.main.dataclass.menus import MenuList
+from src.main.dataclass.customers import CustomerGroup
+from src.main.networklayer.session import manage_connections
+from src.main.networklayer.session import terminate_accept
+from src.main.networklayer.session import close_server
 
 
 class PosServer(object):
@@ -64,7 +64,8 @@ class PosServer(object):
     def save_html(cls, path=None):
         """save program logs to html"""
         if path is None:
-            path = os.getcwd() + f"/resource/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
+            path = os.path.dirname(os.path.abspath(__file__))\
+                   + f"/resource/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
         out("Log saved to %s" % path)
         log_console.save_html(path)
         if cls.__OS[0] == "Windows":
@@ -91,7 +92,7 @@ class PosServer(object):
             cls.__RUN_TYPE = "python " if os.path.splitext(sys.argv[0])[1] == ".py" else ""
         else:
             config = ConfigParser()
-            path = os.getcwd() + "/resource/setting.untactorder.ini"
+            path = os.path.dirname(os.path.abspath(__file__)) + "/resource/setting.untactorder.ini"
             config.read(path)
             if 'SERVERINFO' not in config:
                 config.add_section('SERVERINFO')
@@ -150,7 +151,7 @@ class PosServer(object):
     @classmethod
     def update_checker(cls):
         out("\nServer Program Version Info :")
-        v_file = os.getcwd() + "/resource/version.rc"
+        v_file = os.path.dirname(os.path.abspath(__file__)) + "/resource/version.rc"
         with open(v_file, 'r') as f:
             rc = f.read().replace("\n", "")
             file_info = rc[rc.find("StringFileInfo"):rc.rfind("VarFileInfo")].replace(" ", "").replace("(u'", "('").replace(",u'", ", '")
@@ -167,6 +168,13 @@ class PosServer(object):
     @classmethod
     def get_server_addr(cls):
         return cls.__IP, cls.__PORT
+
+    @classmethod
+    def clear(cls):
+        if cls.__OS[0] == "Windows":
+            os.system("cls")
+        else:
+            os.system("clear")
 
     def run_server(self):
         self.__accept_thread.start()
@@ -187,7 +195,8 @@ class PosServer(object):
         popup_thread.start()
 
         def pos_cui() -> Columns:
-            user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{total_price}", expand=False) for table_id, total_price in self.__customer_group.items()]
+            user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{table.get_total_price()}", expand=False)
+                                for table_id, table in self.__customer_group.items()]
             return Columns(user_renderables)
 
         with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:

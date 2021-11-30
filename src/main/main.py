@@ -3,9 +3,9 @@
 ### Alias : PosServer.main & Last Modded : 2021.11.07. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-from substances import print
-from substances import print_traceback
-from substances import PosServer
+from src.main.substances import print
+from src.main.substances import print_traceback
+from src.main.substances import PosServer
 
 DEBUG = False
 
@@ -17,12 +17,11 @@ if __name__ == '__main__':
         PosServer.os_checker()
         PosServer.update_checker()
         PosServer.print_menu_version(detailed=True)
+        PosServer.clear()
 
         # server start
         pos = PosServer()
         pos.run_server()
-        import os
-        os.system("cls")
         pos.run_pos_cui()
 
         # server close

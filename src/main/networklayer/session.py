@@ -11,12 +11,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from socket import socket as Socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 
-if __name__ == "__main__":
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-
-from console import log
+from src.main.console import log
 
 __server_socket = None
 __accept_terminated = False
@@ -24,7 +19,7 @@ __accept_terminated = False
 
 def init_server():
     """initialize Server Socket"""
-    from substances import PosServer
+    from src.main.substances import PosServer
     global __server_socket
     __server_socket = Socket(AF_INET, SOCK_STREAM)
     __server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -46,7 +41,7 @@ def accept_continuously(connected):
         init_server()
     while not __accept_terminated:
         client_socket, client_addr = __server_socket.accept()
-        log(f"[SESSION] 클라이언트{client_addr}가 연결 되었습니다.")
+        log(f"[SESSION] Client{client_addr}가 연결 되었습니다.")
         connected.append((client_socket, client_addr))
 
 
@@ -54,7 +49,7 @@ def manage_connections(cus_group):
     signin_pool = ThreadPoolExecutor()
     connected = []
     signin_pool.submit(accept_continuously, connected)
-    from networklayer.application import sign_in
+    from src.main.networklayer.application import sign_in
     while not __accept_terminated:
         if len(connected) > 0:
             client_socket, client_addr = connected.pop(0)
@@ -93,7 +88,6 @@ def send_continually(sokt, addr, send_queue):
             send(sokt, addr, jsn)
             log(f"[SESSION:{addr}] send_con - send finished")
         else:
-            #log(f"[SESSION:{addr}] send_con - send data not found")
             time.sleep(0)  # Thread.yield()
 
 
