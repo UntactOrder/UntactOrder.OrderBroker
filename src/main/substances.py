@@ -57,6 +57,7 @@ class PosServer(object):
         except RuntimeError:
             pass
         try:
+            self.__popup_queue.put(-1)
             self.__popup_process.terminate()
         except RuntimeError:
             pass
@@ -198,7 +199,7 @@ class PosServer(object):
             return Columns(user_renderables)
 
         with Live(refresh_per_second=1, console=console, screen=True, vertical_overflow="visible") as live:
-            while self.__is_cui_thread_terminated:
+            while not self.__is_cui_thread_terminated:
                 #time.sleep(0.4)
                 live.update(pos_cui())
 

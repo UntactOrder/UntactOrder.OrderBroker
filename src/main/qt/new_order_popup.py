@@ -3,8 +3,7 @@
 import os
 import sys
 import time
-from playsound import playsound
-from threading import Thread
+#from playsound import playsound
 
 from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton,
                              QScrollArea, QApplication, QHBoxLayout, QVBoxLayout, QMainWindow)
@@ -55,9 +54,11 @@ def run_order_popup(popup_queue, get_menu):
     app = QtWidgets.QApplication(sys.argv)
     while True:
         if popup_queue.qsize() > 0:
-            playsound(MUSIC_PATH, block=False)
+            #playsound(MUSIC_PATH, block=False)
             msg = []
             order = popup_queue.get()
+            if order == -1:
+                break
             for menu_id, count in order.items():
                 menu = get_menu(int(menu_id))
                 msg.append(menu.get_name() + "  x" + count)
