@@ -7,6 +7,7 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 import os
 import sys
 
+builtin_print = print
 from rich import print
 from rich.traceback import install as install_traceback
 from rich.markdown import Markdown
@@ -59,3 +60,18 @@ def out(msg="", to=None):
     if to is None:
         to = (csprint, log)
     [f(msg) for f in to]
+
+
+def hidecurs(on=True):
+    """hidecurs(True) : hide console cursor
+       hidecurs(False) : show console cursor"""
+    builtin_print("\u001B[?25l" if on else "\u001B[?25h")
+
+
+def clear():
+    if os.name in ('nt', 'dos'):
+        os.system("cls")
+    elif os.name in ('linux', 'osx', 'posix'):
+        os.system("clear")
+    else:
+        builtin_print("\033[H\033[J")  # print("\n" * 120)

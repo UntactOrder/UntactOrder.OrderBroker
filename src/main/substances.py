@@ -15,9 +15,12 @@ import time
 import datetime
 import platform
 from threading import Thread
+from multiprocessing import Process, Queue
 from configparser import ConfigParser
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from src.main.console import *
+from src.main.qt import *
 
 from src.main.dataclass.menus import MenuList
 from src.main.dataclass.customers import CustomerGroup
@@ -38,16 +41,28 @@ class PosServer(object):
     __SERVER_INFO = dict()
 
     def __init__(self):
-        self.__popup_queue = []
+        self.__popup_queue = Queue()
         self.__customer_group = CustomerGroup(self.__popup_queue)
         self.__accept_thread = Thread(target=manage_connections, args=(self.__customer_group, ))
+        self.__popup_process = Process(target=run_order_popup, args=(self.__popup_queue, MenuList.get_menu_by_index))
+        self.__is_cui_thread_terminated = False
+        self.__cui_thread = Thread(target=self.run_pos_cui)
 
-    def quit(self):
+    def __del__(self):
         """quit server"""
         terminate_accept()
         close_server()
         try:
             self.__accept_thread.join()
+        except RuntimeError:
+            pass
+        try:
+            self.__popup_process.terminate()
+        except RuntimeError:
+            pass
+        try:
+            self.__is_cui_thread_terminated = True
+            self.__cui_thread.join()
         except RuntimeError:
             pass
 
@@ -169,83 +184,31 @@ class PosServer(object):
     def get_server_addr(cls):
         return cls.__IP, cls.__PORT
 
-    @classmethod
-    def clear(cls):
-        if cls.__OS[0] == "Windows":
-            os.system("cls")
-        else:
-            os.system("clear")
-
     def run_server(self):
         self.__accept_thread.start()
 
-    def run_order_popup(self):
-        while True:
-            if len(self.__popup_queue) > 0:
-                msg = ""
-                for menu_id, count in (self.__popup_queue.pop(0)).items():
-                    pass
-                    #menu = get_menu(int(menu_id))
-                    #self.__price += menu.get_price() * int(count)
-                    #msg += MenuList[int(menu_id)]
-
     def run_pos_cui(self):
-        popup_thread = Thread(target=self.run_order_popup)
-        popup_thread.daemon = True
-        popup_thread.start()
+        hidecurs()
+        clear()
+        #csprint("종료(ESC)                                                                                              결제(p)")
 
         def pos_cui() -> Columns:
             user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{table.get_total_price()}", expand=False)
                                 for table_id, table in self.__customer_group.items()]
             return Columns(user_renderables)
 
-        with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
-            csprint("종료(ESC)                                                                                              결제(p)")
-            for row in range(500000000):
-                time.sleep(0.4)
+        with Live(refresh_per_second=1, console=console, screen=True, vertical_overflow="visible") as live:
+            while self.__is_cui_thread_terminated:
+                #time.sleep(0.4)
                 live.update(pos_cui())
 
+    def run_pos_main_ui(self):
+        self.__popup_process.start()
+        self.__cui_thread.start()
 
-
-        """
-        import curses
-        screen = curses.initscr()
-        curses.noecho()
-        curses.curs_set(0)
-        screen.keypad(True)
-        curses.mousemask(curses.ALL_MOUSE_EVENTS)
-        #screen.addstr("종료(ESC)")
-
-        def pos_cui() -> Columns:
-            user_renderables = [Panel(f"[b]TABLE {table_id}[/b]\n[yellow]{total_price}", expand=False) for table_id, total_price in self.__customer_group.items()]
-            return Columns(user_renderables)
-
-        with Live(refresh_per_second=1, console=console) as live:
-            csprint("종료(ESC)                                                                                결제(p)")
-            key = 0
-            while key != 27:  # Esc to close
-                time.sleep(0.4)
-                live.update(pos_cui())
-                #key = screen.getch()
-                #screen.erase()
-                
-                if key == curses.KEY_MOUSE:
-                    _, mx, my, _, _ = curses.getmouse()
-                    #screen.addstr('mx, my = %i,%i                \r' % (mx, my))
-                    if my == 0:
-                        if 0 <= mx <= 8:
-                            break
-                        elif 89 <= mx <= 95:
-                            self.process_payment()
-                elif key == 'p':
-                    self.process_payment()
-                #screen.refresh()
-                """
-        #curses.endwin()
-
-    def process_payment(self):
-        pass
-        #self.__customer_group.process_payment()
+        app = QtWidgets.QApplication(sys.argv)
+        ui = Ui_MainWindow(self.__customer_group.process_payment)
+        app.exec_()
 
 
 if __name__ == "__main__":

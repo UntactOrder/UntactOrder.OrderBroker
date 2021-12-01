@@ -16,9 +16,10 @@ class Order(dict):
 
     ids = []
 
-    def __init__(self, oid, ordr):
+    def __init__(self, oid, user_id, ordr):
         super(Order, self).__init__(ordr)
         self.__id: str = oid
+        self.__user_id: str = user_id
         self.__price: int = 0
         for menu_id, count in self.items():
             if int(count) == 0:
@@ -29,6 +30,9 @@ class Order(dict):
 
     def get_id(self):
         return self.__id
+
+    def get_user_id(self):
+        return self.__user_id
 
     def get_price(self):
         return self.__price
@@ -61,7 +65,7 @@ class OrderList(list):
                 oid = _oid
                 break
         try:
-            new_ordr = Order(oid, ordr)
+            new_ordr = Order(oid, self.user_id, ordr)
             self.append(new_ordr)
             log(f"[ORDRLST] Order Object successfully added.")
             stat = "success"

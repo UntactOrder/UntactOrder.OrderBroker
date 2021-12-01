@@ -12,3 +12,5 @@ from .apis import cslog
 from .apis import getch
 from .apis import print_traceback
 from .apis import out
+from .apis import hidecurs
+from .apis import clear

@@ -72,7 +72,6 @@ class CustomerGroup(dict):
 
     _LOCATION = os.path.dirname(
         os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/data/tables.untactorder.db"
-    print(_LOCATION)
     _COLUMNS_INIT = "(id integer PRIMARY KEY, name text)"
 
     def __init__(self, popup_queue):
@@ -156,7 +155,7 @@ class CustomerGroup(dict):
                         ordr_id, status, new_ordr = user.make_new_order(data['value'])
                         resp['time'] = ordr_id
                         resp['status'] = status
-                        self.__popup_queue.append(new_ordr)
+                        self.__popup_queue.put(new_ordr)
                         next(process)
             else:
                 time.sleep(0)  # Thread.yield()
@@ -170,7 +169,9 @@ class CustomerGroup(dict):
         log(f"[CUSTOMER:{user.get_addr()}] Order Management Thread Terminated.")
 
     def process_payment(self):
-        pass
+        # 임시로 구현해 놓은 것
+        if len(self) > 0:
+            del self[self.keys()[0]]
 
 
 if __name__ == "__main__":
