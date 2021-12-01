@@ -19,14 +19,15 @@ from multiprocessing import Process, Queue
 from configparser import ConfigParser
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from src.main.console import *
-from src.main.qt import *
+from console_api import *
+from qt_main_ui import Ui_MainWindow
+from qt_new_order_popup import run_order_popup
 
-from src.main.dataclass.menus import MenuList
-from src.main.dataclass.customers import CustomerGroup
-from src.main.networklayer.session import manage_connections
-from src.main.networklayer.session import terminate_accept
-from src.main.networklayer.session import close_server
+from dataclass_menus import MenuList
+from dataclass_customers import CustomerGroup
+from network_session import manage_connections
+from network_session import terminate_accept
+from network_session import close_server
 
 
 class PosServer(object):
@@ -97,8 +98,7 @@ class PosServer(object):
     def save_html(cls, path=None):
         """save program logs to html"""
         if path is None:
-            path = os.path.dirname(os.path.abspath(__file__))\
-                   + f"/resource/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
+            path = f"res/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
         out("Log saved to %s" % path)
         log_console.save_html(path)
         if cls.__OS[0] == "Windows":
@@ -112,12 +112,7 @@ class PosServer(object):
             case 1:
                 pass
             case 2 | 4:
-                if sys.argv[1] == "NOT_OPEN_WT":
-                    cls.__OPEN_WT = False
-                if len(sys.argv) == 4:
-                    cls.__IP, cls.__PORT = sys.argv[2], sys.argv[3]
-            case 3:
-                cls.__IP, cls.__PORT = sys.argv[1], sys.argv[2]
+                cls.__OPEN_WT = False
             case _:
                 cls.exit(-1, f"파라미터가 잘못 입력되었습니다.\n입력된 파라미터 : {sys.argv}\n아무키나 눌러 프로그램을 종료합니다.")
 
@@ -125,7 +120,7 @@ class PosServer(object):
             cls.__RUN_TYPE = "python " if os.path.splitext(sys.argv[0])[1] == ".py" else ""
         else:
             config = ConfigParser()
-            path = os.path.dirname(os.path.abspath(__file__)) + "/resource/setting.untactorder.ini"
+            path = "res/setting.untactorder.ini"
             config.read(path)
             if 'SERVERINFO' not in config:
                 config.add_section('SERVERINFO')
@@ -184,7 +179,7 @@ class PosServer(object):
     @classmethod
     def update_checker(cls):
         out("\nServer Program Version Info :")
-        v_file = os.path.dirname(os.path.abspath(__file__)) + "/resource/version.rc"
+        v_file = "res/version.rc"
         with open(v_file, 'r') as f:
             rc = f.read().replace("\n", "")
             file_info = rc[rc.find("StringFileInfo"):rc.rfind("VarFileInfo")].replace(" ", "").replace("(u'", "('").replace(",u'", ", '")
