@@ -87,7 +87,8 @@ class CustomerGroup(dict):
         for data in self.__networking_data:
             data[0].append(-1)
             data[1].append(-1)
-        self.__executor.shutdown(wait=True)
+        self.__executor.shutdown(wait=False)  # 이것도 기다리니까 안끝남
+        log("[CUSTOMER] del CustomerGroup Instance.")
 
     def get_table_from_db(self):
         """꼭 한번은 호출 해야 함"""

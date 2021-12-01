@@ -3,7 +3,7 @@
 import os
 import sys
 import time
-#from playsound import playsound
+from playsound import playsound
 
 from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton,
                              QScrollArea, QApplication, QHBoxLayout, QVBoxLayout, QMainWindow)
@@ -11,6 +11,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic
 from PyQt5 import QtGui
 
+from src.main.console import log
 
 MUSIC_PATH = os.path.dirname(
     os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/new_order_sound.mp3"
@@ -51,10 +52,9 @@ def get_scroll_view(table, order, price):
 
 
 def run_order_popup(popup_queue, get_menu):
-    app = QtWidgets.QApplication(sys.argv)
+    q_app = QtWidgets.QApplication(sys.argv)
     while True:
         if popup_queue.qsize() > 0:
-            #playsound(MUSIC_PATH, block=False)
             msg = []
             order = popup_queue.get()
             if order == -1:
@@ -62,10 +62,12 @@ def run_order_popup(popup_queue, get_menu):
             for menu_id, count in order.items():
                 menu = get_menu(int(menu_id))
                 msg.append(menu.get_name() + "  x" + count)
-            view = get_scroll_view(order.get_user_id(), msg, order.get_price())
-            app.exec_()
+            sc_view = get_scroll_view(order.get_user_id(), msg, order.get_price())
+            playsound(MUSIC_PATH)
+            q_app.exec_()
         else:
             time.sleep(0)
+    log("[PYQT5] Run_Order_Popup Process terminated.")
 
 
 if __name__ == '__main__':

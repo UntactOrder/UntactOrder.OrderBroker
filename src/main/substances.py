@@ -48,24 +48,41 @@ class PosServer(object):
         self.__is_cui_thread_terminated = False
         self.__cui_thread = Thread(target=self.run_pos_cui)
 
-    def __del__(self):
+    def __enter__(self):
+        """start server"""
+        log("[SUBSTANCES] new PosServer Instance.")
+        self.run_server()
+        self.__popup_process.start()
+        self.__cui_thread.start()
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         """quit server"""
         terminate_accept()
-        close_server()
         try:
             self.__accept_thread.join()
-        except RuntimeError:
-            pass
+            log("[SUBSTANCES] Accept Thread Joined.")
+        except RuntimeError as e:
+            log(e)
+        close_server()
+
         try:
             self.__popup_queue.put(-1)
             self.__popup_process.terminate()
-        except RuntimeError:
-            pass
+            log("[SUBSTANCES] PopUp Thread Terminated.")
+        except RuntimeError as e:
+            log(e)
+
+        del self.__customer_group
+
         try:
             self.__is_cui_thread_terminated = True
             self.__cui_thread.join()
-        except RuntimeError:
-            pass
+            log("[SUBSTANCES] CUI Thread Joined.")
+        except RuntimeError as e:
+            log(e)
+        log("[SUBSTANCES] del PosServer Instance.")
 
     @staticmethod
     def exit(error_code=0, prompt="Press any key to exit program. "):
@@ -198,18 +215,18 @@ class PosServer(object):
                                 for table_id, table in self.__customer_group.items()]
             return Columns(user_renderables)
 
-        with Live(refresh_per_second=1, console=console, screen=True, vertical_overflow="visible") as live:
+        with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
             while not self.__is_cui_thread_terminated:
                 #time.sleep(0.4)
                 live.update(pos_cui())
+        log("[SUBSTANCES] Run_Pos_Cui Thread terminated.")
 
     def run_pos_main_ui(self):
-        self.__popup_process.start()
-        self.__cui_thread.start()
-
+        log("[SUBSTANCES] Run Pos Main UI.")
         app = QtWidgets.QApplication(sys.argv)
         ui = Ui_MainWindow(self.__customer_group.process_payment)
         app.exec_()
+        log("[SUBSTANCES] Quit Pos Main UI.")
 
 
 if __name__ == "__main__":

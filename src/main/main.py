@@ -15,7 +15,6 @@ DEBUG = False
 
 
 if __name__ == '__main__':
-    pos = PosServer()
     try:
         # before server start
         PosServer.server_config_parser(DEBUG)
@@ -23,15 +22,11 @@ if __name__ == '__main__':
         PosServer.update_checker()
         PosServer.print_menu_version(detailed=True)
 
-        # server start
-        pos.run_server()
-        pos.run_pos_main_ui()
-
+        # start server things
+        with PosServer() as pos:
+            pos.run_pos_main_ui()
     except Exception:
         print_traceback()
-    finally:
-        # server close
-        del pos
 
     # save logs
     PosServer.save_html()

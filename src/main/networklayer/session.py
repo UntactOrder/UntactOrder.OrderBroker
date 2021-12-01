@@ -46,6 +46,7 @@ def accept_continuously(connected):
 
 
 def manage_connections(cus_group):
+    log("[SESSION] Manage_Connections Thread Started.")
     signin_pool = ThreadPoolExecutor()
     connected = []
     signin_pool.submit(accept_continuously, connected)
@@ -55,7 +56,10 @@ def manage_connections(cus_group):
             client_socket, client_addr = connected.pop(0)
             signin_pool.submit(sign_in, cus_group, client_socket, client_addr)
             log(f"[SESSION] {client_addr} is in signin_pool.")
-    signin_pool.shutdown(wait=True)
+        else:
+            time.sleep(0)
+    signin_pool.shutdown(wait=False)  # 기다리게 했더니 아예 안꺼지네....
+    log("[SESSION] Manage_Connections Thread terminated.")
 
 
 def terminate_accept():
