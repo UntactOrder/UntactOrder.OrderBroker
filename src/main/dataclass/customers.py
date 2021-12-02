@@ -172,7 +172,9 @@ class CustomerGroup(dict):
     def process_payment(self):
         # 임시로 구현해 놓은 것
         if len(self) > 0:
-            del self[list(self.keys())[0]]
+            user_id = list(self.keys())[0]
+            del self[user_id]
+            del self.__networking_data[user_id]
 
 
 if __name__ == "__main__":
