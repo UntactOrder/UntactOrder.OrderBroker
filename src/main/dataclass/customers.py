@@ -92,7 +92,7 @@ class CustomerGroup(dict):
 
     def get_table_from_db(self):
         """꼭 한번은 호출 해야 함"""
-        self.__table_range = 15
+        self.__table_range = 25  # 임시로 이렇게
         log(f"[CUSTOMER] 테이블 수 {self.__table_range}로 설정됨")
 
     def sign_in(self, socket, addr, user_id: str, pw: str):

@@ -3,7 +3,7 @@
 import os
 import sys
 import time
-from playsound import playsound
+import pygame
 
 from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton,
                              QScrollArea, QApplication, QHBoxLayout, QVBoxLayout, QMainWindow)
@@ -11,7 +11,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5 import QtWidgets, uic
 from PyQt5 import QtGui
 
-from src.main.console import log
+from src.main.console import log, clear
 
 MUSIC_PATH = os.path.dirname(
     os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/new_order_sound.mp3"
@@ -52,6 +52,9 @@ def get_scroll_view(table, order, price):
 
 
 def run_order_popup(popup_queue, get_menu):
+    pygame.mixer.init()
+    clear()
+
     q_app = QtWidgets.QApplication(sys.argv)
     while True:
         if popup_queue.qsize() > 0:
@@ -63,7 +66,8 @@ def run_order_popup(popup_queue, get_menu):
                 menu = get_menu(int(menu_id))
                 msg.append(menu.get_name() + "  x" + count)
             sc_view = get_scroll_view(order.get_user_id(), msg, order.get_price())
-            playsound(MUSIC_PATH)
+            pygame.mixer.music.load(MUSIC_PATH)
+            pygame.mixer.music.play()
             q_app.exec_()
         else:
             time.sleep(0)
