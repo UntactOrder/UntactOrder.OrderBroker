@@ -30,6 +30,10 @@ class Customer(object):
         self.__orderlist: OrderList = OrderList(user_id)
         self.__total_price: int = 0
 
+    def __del__(self):
+        if self.__socket is not None:
+            self.disconnect()
+
     def get_order_list(self):
         return self.__orderlist
 
