@@ -218,7 +218,10 @@ class PosServer(object):
         with Live(refresh_per_second=1, console=console, vertical_overflow="visible") as live:
             while not self.__is_cui_thread_terminated:
                 #time.sleep(0.4)
-                live.update(pos_cui())
+                try:
+                    live.update(pos_cui())
+                except RuntimeError:  # 이터레이션 중에 결제 하면 길이가 변해서 오류남
+                    pass
         log("[SUBSTANCES] Run_Pos_Cui Thread terminated.")
 
     def run_pos_main_ui(self):
