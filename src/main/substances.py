@@ -123,30 +123,30 @@ class PosServer(object):
 
         if cls.__OPEN_WT:
             cls.__RUN_TYPE = "python " if os.path.splitext(sys.argv[0])[1] == ".py" else ""
-        else:
-            config = ConfigParser()
-            path = os.path.dirname(os.path.abspath(__file__)) + "/resource/setting.untactorder.ini"
-            config.read(path)
-            if 'SERVERINFO' not in config:
-                config.add_section('SERVERINFO')
-            try:
-                cls.__IP = config['SERVERINFO']['ip']
-            except KeyError:
-                ip = input("서버 IP가 설정되지 않았습니다. 공유기에 포스기 컴퓨터를 고정IP로 설정한 후 해당 IP를 입력해주세요! 아무것도 입력하지 않으면 127.0.0.1을 사용합니다. : ")
-                cls.__IP = '127.0.0.1' if ip == "" else ip
-                config.set('SERVERINFO', 'ip', cls.__IP)
-                with open(path, "wt") as fp:
-                    config.write(fp)
-            from configparser import NoOptionError
-            try:
-                cls.__PORT = config.getint('SERVERINFO', 'port')
-            except NoOptionError:
-                from random import randint
-                port = input("서버 Port가 설정되지 않았습니다. 원하시는 포트번호를 입력해주세요! 49152~65535이외의 값을 입력하는 경우 랜덤으로 값을 생성합니다. : ")
-                cls.__PORT = port if "49152" <= port <= "65535" else randint(49152, 65535)
-                config.set('SERVERINFO', 'port', f'{cls.__PORT}')
-                with open(path, "wt") as fp:
-                    config.write(fp)
+
+        config = ConfigParser()
+        path = os.path.dirname(os.path.abspath(__file__)) + "/resource/setting.untactorder.ini"
+        config.read(path)
+        if 'SERVERINFO' not in config:
+            config.add_section('SERVERINFO')
+        try:
+            cls.__IP = config['SERVERINFO']['ip']
+        except KeyError:
+            ip = input("서버 IP가 설정되지 않았습니다. 공유기에 포스기 컴퓨터를 고정IP로 설정한 후 해당 IP를 입력해주세요! 아무것도 입력하지 않으면 127.0.0.1을 사용합니다. : ")
+            cls.__IP = '127.0.0.1' if ip == "" else ip
+            config.set('SERVERINFO', 'ip', cls.__IP)
+            with open(path, "wt") as fp:
+                config.write(fp)
+        from configparser import NoOptionError
+        try:
+            cls.__PORT = config.getint('SERVERINFO', 'port')
+        except NoOptionError:
+            from random import randint
+            port = input("서버 Port가 설정되지 않았습니다. 원하시는 포트번호를 입력해주세요! 49152~65535이외의 값을 입력하는 경우 랜덤으로 값을 생성합니다. : ")
+            cls.__PORT = port if "49152" <= port <= "65535" else randint(49152, 65535)
+            config.set('SERVERINFO', 'port', f'{cls.__PORT}')
+            with open(path, "wt") as fp:
+                config.write(fp)
 
     @classmethod
     def os_checker(cls):
@@ -227,6 +227,7 @@ class PosServer(object):
     def run_pos_main_ui(self):
         log("[SUBSTANCES] Run Pos Main UI.")
         app = QtWidgets.QApplication(sys.argv)
+        clear()
         ui = Ui_MainWindow(self.__customer_group.process_payment)
         app.exec_()
         log("[SUBSTANCES] Quit Pos Main UI.")

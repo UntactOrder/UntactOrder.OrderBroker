@@ -53,9 +53,8 @@ def get_scroll_view(table, order, price):
 
 def run_order_popup(popup_queue, get_menu):
     pygame.mixer.init()
-    clear()
-
     q_app = QtWidgets.QApplication(sys.argv)
+    clear()
     while True:
         if popup_queue.qsize() > 0:
             msg = []
