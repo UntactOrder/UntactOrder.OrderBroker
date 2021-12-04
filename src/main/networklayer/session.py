@@ -72,7 +72,7 @@ def send(sokt, addr, jsn):
     log(f"[SESSION:{addr}] send finished")
 
 
-def recv(sokt, addr):
+def recv(sokt: Socket, addr):
     data = sokt.recv(4096)
     if not data:  # 빈 문자열 수신시 연결을 끊어야 함
         data = -1
