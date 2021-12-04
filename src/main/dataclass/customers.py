@@ -178,7 +178,7 @@ class CustomerGroup(dict):
         if len(self) > 0:
             user_id = list(self.keys())[0]
             del self[user_id]
-            del self.__networking_data[user_id]
+            #del self.__networking_data[user_id]
 
 
 if __name__ == "__main__":
