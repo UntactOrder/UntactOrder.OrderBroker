@@ -88,7 +88,7 @@ class PosServer(object):
     def exit(error_code=0, prompt="Press any key to exit program. "):
         """exit program"""
         if prompt is not None:
-            print(prompt, end='', flush=True)
+            builtin_print(prompt, end='', flush=True)
             getch()
         sys.stderr.close()
         sys.exit(error_code)
