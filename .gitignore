@@ -128,6 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# 숨겨야 하는 각종 key값
+build.key
+
 # 단일 매장 전용 데이터
 *.untactorder.ini
 *.log.html
