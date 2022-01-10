@@ -66,11 +66,9 @@ class MenuList(object):
     """
 
     config = ConfigParser()
-    CONFIGPATH = os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/setting.untactorder.ini"
+    CONFIGPATH = "data/setting.untactorder.ini"
     __MENUS = []
-    _LOCATION = os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/data/menus.untactorder.db"
+    _LOCATION = "data/menus.untactorder.db"
     _COLUMNS_INIT = """(id integer PRIMARY KEY autoincrement,
      name text, price integer, type text, pinned integer, soldout integer, available integer)
      """

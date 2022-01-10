@@ -22,20 +22,19 @@ from src.main.gui.core.functions import set_svg_image
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import Qt
-from src.main.qt_core import QGraphicsDropShadowEffect
-from src.main.qt_core import QCoreApplication
-from src.main.qt_core import QGraphicsOpacityEffect
-from src.main.qt_core import QColor
-from src.main.qt_core import QPoint
-from src.main.qt_core import QIcon
-from src.main.qt_core import QSvgWidget
-from src.main.qt_core import QPropertyAnimation
-from src.main.qt_core import QEasingCurve
+from src.main.gui.qt_core import Qt
+from src.main.gui.qt_core import QGraphicsDropShadowEffect
+from src.main.gui.qt_core import QCoreApplication
+from src.main.gui.qt_core import QGraphicsOpacityEffect
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import QPoint
+from src.main.gui.qt_core import QIcon
+from src.main.gui.qt_core import QSvgWidget
+from src.main.gui.qt_core import QPropertyAnimation
+from src.main.gui.qt_core import QEasingCurve
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
-from src.main.gui.core.json_settings import Settings
 
 # IMPORT MAIN WINDOW PAGES / AND SIDE BOXES FOR APP
 # ///////////////////////////////////////////////////////////////

@@ -17,9 +17,9 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QWidget
-from src.main.qt_core import QHBoxLayout
-from src.main.qt_core import QFrame
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QFrame
 
 
 # CUSTOM LEFT MENU

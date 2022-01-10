@@ -33,9 +33,9 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 * }}
 * recv : respond = {"requested": {"method": "put", "uri": "new_order", "value": "202111182208"}, "respond": "success"}
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-from src.main.console import log
-from src.main.networklayer.session import sokt_close
-import src.main.networklayer.presentation as pr
+from src.main.cli import log
+from src.main.network.session import sokt_close
+import src.main.network.presentation as pr
 
 
 def sign_in(cus_group, sokt, addr):

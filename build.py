@@ -34,9 +34,9 @@ if __name__ == "__main__":
     elif version == "2":
         py += "3.8"
         print("\n\nWindows 7 호환성을 위해 Pyside버전을 2버전으로 변경합니다. 스크립트가 정상 종료되지 못한 경우 수동으로 src/main/qt_core.py 파일을 원래대로 되돌려주세요.\n\n")
-        os.rename("src/main/qt_core.py", "src/main/qt_core.py.bak")
-        with open("src/main/qt_core.py.bak", "rt", encoding='utf-8') as ori, \
-                open("src/main/qt_core.py", "wt", encoding='utf-8') as new:
+        os.rename("src/main/gui/qt_core.py", "src/main/gui/qt_core.py.bak")
+        with open("src/main/gui/qt_core.py.bak", "rt", encoding='utf-8') as ori, \
+                open("src/main/gui/qt_core.py", "wt", encoding='utf-8') as new:
             for line in ori.readlines():
                 if "SUPPORT_WINDOWS_7" in line:
                     print(line)
@@ -70,8 +70,8 @@ if __name__ == "__main__":
         os.system(f"{py} -m PyInstaller build.spec --noconfirm")
 
     if version == "2":
-        os.remove("src/main/qt_core.py")
-        os.rename("src/main/qt_core.py.bak", "src/main/qt_core.py")
+        os.remove("src/main/gui/qt_core.py")
+        os.rename("src/main/gui/qt_core.py.bak", "src/main/gui/qt_core.py")
         print("\nqt_core.py 파일을 원래대로 되돌렸습니다.")
 
     input("\n작업이 종료되었습니다. 오류 로그가 있는지 확인하세요. 아무 키나 눌러서 종료합니다. ")

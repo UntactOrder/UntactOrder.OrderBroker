@@ -18,25 +18,24 @@
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 # from QtCore
-from src.main.qt_core import QCoreApplication
-from src.main.qt_core import QMetaObject
-from src.main.qt_core import QRect
-from src.main.qt_core import QSize
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QCoreApplication
+from src.main.gui.qt_core import QMetaObject
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QSize
+from src.main.gui.qt_core import Qt
 # from QtGui
-from src.main.qt_core import QFont
+from src.main.gui.qt_core import QFont
 # from QtWidgets
-from src.main.qt_core import QWidget
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QFrame
-from src.main.qt_core import QLabel
-from src.main.qt_core import QProgressBar
-from src.main.qt_core import QPushButton
-from src.main.qt_core import QLineEdit
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QProgressBar
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import QLineEdit
 
 # IMPORT STYLES
 # ///////////////////////////////////////////////////////////////
-from src.main.gui.widgets.py_window.styles import Styles
 
 
 class UiSplashScreen(object):

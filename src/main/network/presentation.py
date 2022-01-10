@@ -5,9 +5,9 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import json
 
-from src.main.console import *
-from src.main.networklayer.session import send
-from src.main.networklayer.session import recv
+from src.main.cli import *
+from src.main.network.session import send
+from src.main.network.session import recv
 
 DEBUG = True
 

@@ -20,11 +20,11 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QGraphicsDropShadowEffect
-from src.main.qt_core import QHBoxLayout
-from src.main.qt_core import QFrame
-from src.main.qt_core import QColor
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QGraphicsDropShadowEffect
+from src.main.gui.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import Qt
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////

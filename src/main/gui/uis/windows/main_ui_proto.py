@@ -3,42 +3,41 @@
 import os
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMessageBox
+from src.main.gui.qt_core import QRect, QIcon, QWidget, QPushButton
+from src.main.gui.qt_core import QCoreApplication, QApplication, QMessageBox
 
 
-class Ui_MainWindow(QtWidgets.QWidget):
+class Ui_MainWindow(QWidget):
     def __init__(self, process_payment):
         super().__init__()
 
         self.process_payment = process_payment
 
-        self.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(
+        self.setWindowIcon(QIcon(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(
             os.path.abspath(os.path.dirname(os.path.abspath(__file__))))))))+"/icon/server_logo.ico"))
         self.setWindowTitle("언택트 오더 POS 주문 서버")
         self.setFixedSize(970, 90)
 
-        self.centralwidget = QtWidgets.QWidget(self)
+        self.centralwidget = QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
 
         # About_button
-        self.about_button = QtWidgets.QPushButton(self.centralwidget)
-        self.about_button.setGeometry(QtCore.QRect(20, 20, 200, 50))
+        self.about_button = QPushButton(self.centralwidget)
+        self.about_button.setGeometry(QRect(20, 20, 200, 50))
         self.about_button.setObjectName("about_button")
         self.about_button.setText("서버 버전 정보")
         self.about_button.clicked.connect(self.about_event)
 
         # Information_button
-        self.information_button = QtWidgets.QPushButton(self.centralwidget)
-        self.information_button.setGeometry(QtCore.QRect(230, 20, 200, 50))
+        self.information_button = QPushButton(self.centralwidget)
+        self.information_button.setGeometry(QRect(230, 20, 200, 50))
         self.information_button.setObjectName("information_button")
         self.information_button.setText("결제 진행하기")
         self.information_button.clicked.connect(self.information_event)
 
         # Critical_button
-        self.critical_button = QtWidgets.QPushButton(self.centralwidget)
-        self.critical_button.setGeometry(QtCore.QRect(700, 20, 250, 50))
+        self.critical_button = QPushButton(self.centralwidget)
+        self.critical_button.setGeometry(QRect(700, 20, 250, 50))
         self.critical_button.setObjectName("critical_button")
         self.critical_button.setText("주문 서버 종료하기")
         self.critical_button.clicked.connect(self.critical_event)
@@ -69,6 +68,6 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     ui = Ui_MainWindow()
     sys.exit(app.exec_())

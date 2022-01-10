@@ -2,15 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a7d2281-c97d-47a3-a6fd-b6312e925c23" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PyOneDark.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PosServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PyOneDark_Qt_Widgets_Modern_GUI.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/PosServer_UntactOrder_Project.ipr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PyOneDark_Qt_Widgets_Modern_GUI.iws" beforeDir="false" afterPath="$PROJECT_DIR$/PosServer_UntactOrder_Project.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/res/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PosServer_UntactOrder_Project.iws" beforeDir="false" afterPath="$PROJECT_DIR$/PosServer_UntactOrder_Project.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/build.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/console/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/cli/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/console/apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/cli/apis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/dataclass/customers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/dataclass/customers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/dataclass/menus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/dataclass/menus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/dataclass/orders.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/dataclass/orders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/columns/ui_left_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/columns/ui_left_column.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/columns/ui_right_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/columns/ui_right_column.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/pages/ui_main_pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/pages/ui_main_pages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/pages/ui_splash_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/pages/ui_splash_screen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/functions_main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/functions_main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/setup_main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/setup_main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/ui_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/main_window/ui_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/uis/windows/splash_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/splash_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_circular_progress/py_circular_progress.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_circular_progress/py_circular_progress.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_credits_bar/py_credits.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_credits_bar/py_credits.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_grips/py_grips.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_grips/py_grips.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_icon_button/py_icon_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_icon_button/py_icon_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_icon.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_icon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_left_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_left_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_left_column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_column/py_left_column.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_div.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_div.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_left_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_left_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_left_menu_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_left_menu/py_left_menu_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_line_edit/py_line_edit.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_line_edit/py_line_edit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_push_button/py_push_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_push_button/py_push_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_slider/py_slider.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_slider/py_slider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_table_widget/py_table_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_table_widget/py_table_widget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_div.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_div.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_title_bar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_title_bar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_title_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_title_bar/py_title_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_toggle/py_toggle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_toggle/py_toggle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui/widgets/py_window/py_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/widgets/py_window/py_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/gui_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/networklayer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/log/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/networklayer/application.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/network/application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/networklayer/presentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/network/presentation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/networklayer/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/network/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/qt/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/qt/main_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/main_ui_proto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/qt/new_order_popup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/uis/windows/new_order_popup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/qt_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/gui/qt_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/network/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/data/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/log/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/new_order_sound.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/res/new_order_sound.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resource/version.rc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/substances.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/substances.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +81,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="23GNctxV0hANhV0OWDx5TTdpdCa" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,7 +93,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/PosServer_UntactOrder_Project.ipr" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/templates" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="프로젝트" />
     <property name="project.structure.proportion" value="0.15" />
@@ -58,19 +102,21 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\IRACK\PosServer\src\main\templates" />
+      <recent name="C:\Users\IRACK\PosServer\src\main\static" />
       <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\src\main\gui\uis\windows\main_window" />
       <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\res\gui\uis\pages" />
       <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\src\main\gui\uis\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\IRACK\PosServer\src\main\gui\uis\windows" />
+      <recent name="C:\Users\IRACK\PosServer\src\main\gui" />
+      <recent name="C:\Users\IRACK\PosServer\data" />
+      <recent name="C:\Users\IRACK\PosServer\res" />
       <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project" />
-      <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\src\main\gui\uis\windows" />
-      <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\src\main\gui\uis\pages" />
-      <recent name="C:\Users\IRACK\PosServer_UntactOrder_Project\src\main\gui\uis\windows\main_window" />
-      <recent name="C:\PosServer_UntactOrder_Project\res" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.gui_window">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="PosServer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,6 +139,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PosServer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="build" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PosServer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -107,6 +172,50 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/build.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gui_window (3.8)" type="PythonConfigurationType" factoryName="Python">
+      <module name="PosServer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Program Files (x86)\Python38-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/gui_window.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="gui_window" type="PythonConfigurationType" factoryName="Python">
+      <module name="PosServer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Program Files\Python310\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main/gui_window.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -159,14 +268,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Flask (src.main.app)" type="Python.FlaskServer" nameIsGenerated="true">
+      <module name="PosServer" />
+      <option name="target" value="src.main.app" />
+      <option name="targetType" value="PYTHON" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Program Files\Python310\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Flask 서버.Flask (src.main.app)" />
       <item itemvalue="Python.main (3.8)" />
+      <item itemvalue="Python.gui_window (3.8)" />
+      <item itemvalue="Python.gui_window" />
       <item itemvalue="Python.build" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.app" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.build" />
       </list>
     </recent_temporary>
@@ -192,6 +321,8 @@
       <workItem from="1641815198054" duration="37000" />
       <workItem from="1641815277997" duration="570000" />
       <workItem from="1641816503627" duration="791000" />
+      <workItem from="1641818068283" duration="1016000" />
+      <workItem from="1641819165462" duration="3683000" />
     </task>
     <servers />
   </component>
@@ -214,8 +345,11 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$Flask__src_main_app_.coverage" NAME="Flask (src.main.app) 커버리지 결과" MODIFIED="1641819167087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$gui_window.coverage" NAME="gui_window 커버리지 결과" MODIFIED="1641823587583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
     <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$main__3_8_.coverage" NAME="main (3.8) 커버리지 결과" MODIFIED="1641482388559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
-    <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$main.coverage" NAME="main 커버리지 결과" MODIFIED="1641816758465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
+    <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$main.coverage" NAME="main 커버리지 결과" MODIFIED="1641823556500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/main" />
+    <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$Flask.coverage" NAME="Flask (src/main/app.py) 커버리지 결과" MODIFIED="1641819039336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$build.coverage" NAME="build 커버리지 결과" MODIFIED="1641794072087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PosServer_UntactOrder_Project$a.coverage" NAME="a 커버리지 결과" MODIFIED="1641396452398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

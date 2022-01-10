@@ -5,16 +5,15 @@ import sys
 import time
 import pygame
 
-from PyQt5.QtWidgets import (QWidget, QSlider, QLineEdit, QLabel, QPushButton,
-                             QScrollArea, QApplication, QHBoxLayout, QVBoxLayout, QMainWindow)
-from PyQt5.QtCore import Qt, QSize
-from PyQt5 import QtWidgets, uic
-from PyQt5 import QtGui
+from src.main.gui.qt_core import (QWidget, QSlider, QLineEdit, QLabel, QPushButton,
+                                  QScrollArea, QApplication, QHBoxLayout, QVBoxLayout, QMainWindow)
+from src.main.gui.qt_core import Qt, QSize
+from src.main.gui.qt_core import QApplication
+from src.main.gui.qt_core import QIcon
 
-from src.main.console import log, clear
+from src.main.cli import log, clear
 
-MUSIC_PATH = os.path.dirname(
-    os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/new_order_sound.mp3"
+MUSIC_PATH = "res/new_order_sound.mp3"
 
 
 class ScrollWindow(QMainWindow):
@@ -23,8 +22,7 @@ class ScrollWindow(QMainWindow):
         self.scroll = QScrollArea()             # Scroll Area which contains the widgets, set as the centralWidget
         self.widget = QWidget()                 # Widget that contains the collection of Vertical Box
         self.vbox = QVBoxLayout()               # The Vertical Box that contains the Horizontal Boxes of  labels and buttons
-        self.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(
-            os.path.abspath(os.path.dirname(os.path.abspath(__file__))))))))+"/icon/server_logo.ico"))
+        self.setWindowIcon(QIcon("res/icon.ico"))
 
         for msg in msg_list:
             self.vbox.addWidget(QLabel(msg))
@@ -53,7 +51,7 @@ def get_scroll_view(table, order, price):
 
 def run_order_popup(popup_queue, get_menu):
     pygame.mixer.init()
-    q_app = QtWidgets.QApplication(sys.argv)
+    q_app = QApplication(sys.argv)
     clear()
     while True:
         if popup_queue.qsize() > 0:
@@ -74,6 +72,6 @@ def run_order_popup(popup_queue, get_menu):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     view = get_scroll_view("1", ["베이컨 필라프  x1", "까르보나라  x2", "베이컨 필라프  x1", "까르보나라  x2", "베이컨 필라프  x1", "까르보나라  x2", "베이컨 필라프  x1", "까르보나라  x2"], 50000)
     app.exec_()

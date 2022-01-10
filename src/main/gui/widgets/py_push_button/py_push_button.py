@@ -17,8 +17,8 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QPushButton
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import Qt
 
 # STYLE
 # ///////////////////////////////////////////////////////////////

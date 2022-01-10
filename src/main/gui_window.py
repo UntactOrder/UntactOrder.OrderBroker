@@ -31,20 +31,24 @@ if os.path.abspath(os.getcwd()) == os.path.dirname(os.path.abspath(__file__)):
     if workdir not in sys.path:
         sys.path.append(workdir)  # 프로젝트 루트를 파이썬 모듈 경로에 추가
 
-from src.main.gui.core.functions import set_svg_icon
-from src.main.gui.uis.windows.main_window.functions_main_window import MainFunctions
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import SUPPORT_WINDOWS_7
-from src.main.qt_core import QMainWindow
-from src.main.qt_core import QApplication
-from src.main.qt_core import QIcon
-from src.main.qt_core import QTimer
+from src.main.gui.qt_core import SUPPORT_WINDOWS_7
+from src.main.gui.qt_core import QMainWindow
+from src.main.gui.qt_core import QApplication
+from src.main.gui.qt_core import QIcon
+from src.main.gui.qt_core import QTimer
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from src.main.gui.core.json_settings import Settings
+
+# IMPORT MODULES
+# ///////////////////////////////////////////////////////////////
+from src.main.gui.core.functions import set_svg_icon
+from src.main.gui.uis.windows.main_window.functions_main_window import MainFunctions
+from src.main.cli.file_encryption import check_if_encrypted
 
 # IMPORT PY ONE DARK WINDOWS
 # ///////////////////////////////////////////////////////////////
@@ -235,6 +239,7 @@ class SplashWindow(QMainWindow, UiSplashWindow):
         QMainWindow.__init__(self)
         UiSplashWindow.__init__(self)
         self.args = args
+        self.check_if_encrypted = check_if_encrypted  # method override
 
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
@@ -280,6 +285,14 @@ class SplashWindow(QMainWindow, UiSplashWindow):
 
         # SET VALUE TO PROGRESS BAR
         self.set_progress(self.get_progress() + 1)
+
+    @staticmethod
+    def try_decrypt(window, __password):
+        correct = False
+        if __password == "123456":  # Do not hard code password in here.
+            correct = True
+        window.change_password_field_border_color(window, correct)
+        return correct
 
     @staticmethod
     def on_close_button_clicked(window, callback=None):

@@ -11,7 +11,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from socket import socket as Socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 
-from src.main.console import log
+from src.main.cli import log
 
 __server_socket = None
 __accept_terminated = False
@@ -50,7 +50,7 @@ def manage_connections(cus_group):
     signin_pool = ThreadPoolExecutor()
     connected = []
     signin_pool.submit(accept_continuously, connected)
-    from src.main.networklayer.application import sign_in
+    from src.main.network.application import sign_in
     while not __accept_terminated:
         if len(connected) > 0:
             client_socket, client_addr = connected.pop(0)

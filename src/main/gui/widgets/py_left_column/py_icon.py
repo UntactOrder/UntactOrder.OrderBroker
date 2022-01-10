@@ -17,12 +17,12 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QWidget
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QPainter
-from src.main.qt_core import QLabel
-from src.main.qt_core import QPixmap
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QPainter
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QPixmap
+from src.main.gui.qt_core import Qt
 
 
 # PY ICON WITH CUSTOM COLORS

@@ -21,10 +21,10 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QPushButton
-from src.main.qt_core import QPropertyAnimation
-from src.main.qt_core import QEasingCurve
-from src.main.qt_core import QParallelAnimationGroup
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import QPropertyAnimation
+from src.main.gui.qt_core import QEasingCurve
+from src.main.gui.qt_core import QParallelAnimationGroup
 
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////

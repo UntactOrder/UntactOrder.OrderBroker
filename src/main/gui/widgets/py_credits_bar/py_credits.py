@@ -17,13 +17,13 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QWidget
-from src.main.qt_core import QHBoxLayout
-from src.main.qt_core import QFrame
-from src.main.qt_core import QLabel
-from src.main.qt_core import QSpacerItem
-from src.main.qt_core import QSizePolicy
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QSpacerItem
+from src.main.gui.qt_core import QSizePolicy
+from src.main.gui.qt_core import Qt
 
 
 # PY CREDITS BAR AND VERSION

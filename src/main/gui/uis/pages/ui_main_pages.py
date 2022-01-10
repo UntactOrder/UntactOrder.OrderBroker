@@ -17,19 +17,19 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QStackedWidget
-from src.main.qt_core import QWidget
-from src.main.qt_core import QFrame
-from src.main.qt_core import QSize
-from src.main.qt_core import QLabel
-from src.main.qt_core import QFont
-from src.main.qt_core import Qt
-from src.main.qt_core import QMetaObject
-from src.main.qt_core import QCoreApplication
-from src.main.qt_core import QScrollArea
-from src.main.qt_core import QRect
-from src.main.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QStackedWidget
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QSize
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QFont
+from src.main.gui.qt_core import Qt
+from src.main.gui.qt_core import QMetaObject
+from src.main.gui.qt_core import QCoreApplication
+from src.main.gui.qt_core import QScrollArea
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QHBoxLayout
 
 
 class UiMainPages(object):

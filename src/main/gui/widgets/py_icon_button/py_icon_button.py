@@ -17,17 +17,17 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QGraphicsDropShadowEffect
-from src.main.qt_core import QPushButton
-from src.main.qt_core import QPainter
-from src.main.qt_core import QBrush
-from src.main.qt_core import QRect
-from src.main.qt_core import QColor
-from src.main.qt_core import QEvent
-from src.main.qt_core import QLabel
-from src.main.qt_core import QPoint
-from src.main.qt_core import QPixmap
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QGraphicsDropShadowEffect
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import QPainter
+from src.main.gui.qt_core import QBrush
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import QEvent
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QPoint
+from src.main.gui.qt_core import QPixmap
+from src.main.gui.qt_core import Qt
 
 
 # PY TITLE BUTTON

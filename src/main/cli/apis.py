@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.substances & Last Modded : 2021.11.29. ###
+### Alias : PosServer.cli.apis & Last Modded : 2021.11.29. ###
 Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 참고: [rich] https://www.youtube.com/watch?v=4zbehnz-8QU
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -20,8 +20,7 @@ from rich.table import Table
 from rich.live import Live
 
 install_traceback()
-sys.stderr = open(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
-                  + "/resource/log/recent_run.log", "wt")
+sys.stderr = open("data/log/recent_run.log", "wt")
 
 theme = Theme({'success': "green", 'error': "bold red"})
 log_console = Console(theme=theme, record=True, stderr=True)

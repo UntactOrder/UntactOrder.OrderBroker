@@ -17,16 +17,16 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QHBoxLayout
-from src.main.qt_core import QSvgWidget
-from src.main.qt_core import QCursor
-from src.main.qt_core import QLabel
-from src.main.qt_core import QFrame
-from src.main.qt_core import Qt
-from src.main.qt_core import QSize
-from src.main.qt_core import QWidget
-from src.main.qt_core import Signal
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QSvgWidget
+from src.main.gui.qt_core import QCursor
+from src.main.gui.qt_core import QLabel
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import Qt
+from src.main.gui.qt_core import QSize
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import Signal
 
 # IMPORT FUNCTIONS
 # ///////////////////////////////////////////////////////////////

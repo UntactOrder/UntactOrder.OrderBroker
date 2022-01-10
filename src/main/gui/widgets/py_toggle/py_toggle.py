@@ -17,16 +17,16 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QPropertyAnimation
-from src.main.qt_core import QCheckBox
-from src.main.qt_core import QPainter
-from src.main.qt_core import QEasingCurve
-from src.main.qt_core import QRect
-from src.main.qt_core import QColor
-from src.main.qt_core import QFont
-from src.main.qt_core import QPoint
-from src.main.qt_core import Property
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QPropertyAnimation
+from src.main.gui.qt_core import QCheckBox
+from src.main.gui.qt_core import QPainter
+from src.main.gui.qt_core import QEasingCurve
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import QFont
+from src.main.gui.qt_core import QPoint
+from src.main.gui.qt_core import Property
+from src.main.gui.qt_core import Qt
 
 
 class PyToggle(QCheckBox):

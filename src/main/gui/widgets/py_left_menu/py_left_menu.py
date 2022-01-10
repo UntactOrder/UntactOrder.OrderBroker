@@ -17,16 +17,16 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QGraphicsDropShadowEffect
-from src.main.qt_core import QPropertyAnimation
-from src.main.qt_core import QColor
-from src.main.qt_core import QWidget
-from src.main.qt_core import Signal
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QEasingCurve
-from src.main.qt_core import QFrame
-from src.main.qt_core import QPushButton
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QGraphicsDropShadowEffect
+from src.main.gui.qt_core import QPropertyAnimation
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import Signal
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QEasingCurve
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import Qt
 
 # IMPORT BUTTON AND DIV
 # ///////////////////////////////////////////////////////////////

@@ -23,13 +23,13 @@ from src.main.gui.core.functions import set_svg_image
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import Qt
-from src.main.qt_core import QIcon
-from src.main.qt_core import QTableWidgetItem
-from src.main.qt_core import QPushButton
-from src.main.qt_core import QSvgWidget
-from src.main.qt_core import QHeaderView
-from src.main.qt_core import QAbstractItemView
+from src.main.gui.qt_core import Qt
+from src.main.gui.qt_core import QIcon
+from src.main.gui.qt_core import QTableWidgetItem
+from src.main.gui.qt_core import QPushButton
+from src.main.gui.qt_core import QSvgWidget
+from src.main.gui.qt_core import QHeaderView
+from src.main.gui.qt_core import QAbstractItemView
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////

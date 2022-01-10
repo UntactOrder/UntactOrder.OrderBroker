@@ -21,10 +21,10 @@ from src.main.gui.core.functions import set_svg_icon
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QVBoxLayout
-from src.main.qt_core import QWidget
-from src.main.qt_core import QFrame
-from src.main.qt_core import QHBoxLayout
+from src.main.gui.qt_core import QVBoxLayout
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QHBoxLayout
 
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////

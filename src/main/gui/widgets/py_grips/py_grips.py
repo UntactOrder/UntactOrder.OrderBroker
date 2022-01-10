@@ -17,13 +17,13 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QWidget
-from src.main.qt_core import QSizeGrip
-from src.main.qt_core import QFrame
-from src.main.qt_core import QRect
-from src.main.qt_core import QCursor
-from src.main.qt_core import QSize
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QSizeGrip
+from src.main.gui.qt_core import QFrame
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QCursor
+from src.main.gui.qt_core import QSize
+from src.main.gui.qt_core import Qt
 
 
 # PY GRIPS

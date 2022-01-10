@@ -17,14 +17,14 @@
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
-from src.main.qt_core import QWidget
-from src.main.qt_core import QGraphicsDropShadowEffect
-from src.main.qt_core import QColor
-from src.main.qt_core import QPainter
-from src.main.qt_core import QFont
-from src.main.qt_core import QRect
-from src.main.qt_core import QPen
-from src.main.qt_core import Qt
+from src.main.gui.qt_core import QWidget
+from src.main.gui.qt_core import QGraphicsDropShadowEffect
+from src.main.gui.qt_core import QColor
+from src.main.gui.qt_core import QPainter
+from src.main.gui.qt_core import QFont
+from src.main.gui.qt_core import QRect
+from src.main.gui.qt_core import QPen
+from src.main.gui.qt_core import Qt
 
 
 class PyCircularProgress(QWidget):
