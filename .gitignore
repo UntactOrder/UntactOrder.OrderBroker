@@ -77,6 +77,9 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# IntelliJ IDEA
+*.iws
+
 # IPython
 profile_default/
 ipython_config.py
@@ -132,6 +135,7 @@ dmypy.json
 build.key
 
 # 단일 매장 전용 데이터
-*.untactorder.ini
-*.log.html
-*.untactorder.db
+/data
+#*.untactorder.ini
+#*.log.html
+#*.untactorder.db
