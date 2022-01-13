@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ### Alias : PosServer.dataclass.orders & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Coded with Python 3.10 Grammar by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import datetime
 import sqlite3
 
-from src.main.console import log
+from src.main.cli.apis import log
 from src.main.dataclass.menus import MenuList
 get_menu = MenuList.get_menu_by_index
 
