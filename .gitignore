@@ -80,7 +80,8 @@ target/
 # IntelliJ IDEA
 .idea
 *.iws
-*.iml
+#*.iml
+#*.ipr
 
 # IPython
 profile_default/
