@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ### Alias : PosServer.dataclass.customers & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Coded with Python 3.10 Grammar by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import os
 import time
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 
-from src.main.console import log
+from src.main.cli import log
 from src.main.dataclass.menus import MenuList
 from src.main.dataclass.orders import OrderList
-from src.main.networklayer.session import sokt_close
-from src.main.networklayer.session import send_continually
-from src.main.networklayer.session import recv_continually
-from src.main.networklayer.application import get_request
-from src.main.networklayer.application import process_request
+from src.main.network.session import sokt_close
+from src.main.network.session import send_continually
+from src.main.network.session import recv_continually
+from src.main.network.application import get_request
+from src.main.network.application import process_request
 
 
 class Customer(object):
@@ -74,8 +74,7 @@ class CustomerGroup(dict):
        테이블 별 데이터 베이스 관리
     """
 
-    _LOCATION = os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/data/tables.untactorder.db"
+    _LOCATION = "data/tables.untactorder.db"
     _COLUMNS_INIT = "(id integer PRIMARY KEY, name text)"
 
     def __init__(self, popup_queue):

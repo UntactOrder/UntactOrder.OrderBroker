@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ### Alias : PosServer.substances & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-참고: [자동 시작] https://blog.naver.com/PostView.nhn?blogId=hunee726&logNo=220976778583&parentCategoryNo=&categoryNo=10&viewDate=&isShowPopularPosts=true&from=search
-                https://liveyourit.tistory.com/23
-참고: [gettext] https://minimilab.tistory.com/10
-참고: [PyQt5] https://wikidocs.net/21849
-             https://m.blog.naver.com/wjdrudtn0225/221999219060
-참고: [curses] https://stackoverflow.com/questions/8677627/getting-mouse-presses-on-a-console-window-for-python
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Coded with Python 3.10 Grammar by IRACK000
+Description : ?
+Reference : [자동 시작] https://blog.naver.com/PostView.nhn?blogId=hunee726&logNo=220976778583&parentCategoryNo=&categoryNo=10&viewDate=&isShowPopularPosts=true&from=search
+                       https://liveyourit.tistory.com/23
+            [gettext] https://minimilab.tistory.com/10
+            [PyQt5] https://wikidocs.net/21849
+                    https://m.blog.naver.com/wjdrudtn0225/221999219060
+            [curses] https://stackoverflow.com/questions/8677627/getting-mouse-presses-on-a-console-window-for-python
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import os
 import sys
 import time
@@ -17,16 +18,18 @@ import platform
 from threading import Thread
 from multiprocessing import Process, Queue
 from configparser import ConfigParser
-from PyQt5 import QtCore, QtGui, QtWidgets
 
-from src.main.console import *
-from src.main.qt import *
+from src.main.gui.qt_core import QApplication
+
+from src.main.cli.apis import *
+from src.main.gui.uis.windows.new_order_popup import run_order_popup
+from src.main.gui.uis.windows.main_ui_proto import Ui_MainWindow
 
 from src.main.dataclass.menus import MenuList
 from src.main.dataclass.customers import CustomerGroup
-from src.main.networklayer.session import manage_connections
-from src.main.networklayer.session import terminate_accept
-from src.main.networklayer.session import close_server
+from src.main.network.session import manage_connections
+from src.main.network.session import terminate_accept
+from src.main.network.session import close_server
 
 
 class PosServer(object):
@@ -88,7 +91,7 @@ class PosServer(object):
     def exit(error_code=0, prompt="Press any key to exit program. "):
         """exit program"""
         if prompt is not None:
-            print(prompt, end='', flush=True)
+            builtin_print(prompt, end='', flush=True)
             getch()
         sys.stderr.close()
         sys.exit(error_code)
@@ -97,8 +100,7 @@ class PosServer(object):
     def save_html(cls, path=None):
         """save program logs to html"""
         if path is None:
-            path = os.path.dirname(os.path.abspath(__file__))\
-                   + f"/resource/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
+            path = f"data/log/{datetime.datetime.now()}.log.html".replace(' ', '_').replace(':', '-')
         out("Log saved to %s" % path)
         log_console.save_html(path)
         if cls.__OS[0] == "Windows":
@@ -125,7 +127,7 @@ class PosServer(object):
             cls.__RUN_TYPE = "python " if os.path.splitext(sys.argv[0])[1] == ".py" else ""
 
         config = ConfigParser()
-        path = os.path.dirname(os.path.abspath(__file__)) + "/resource/setting.untactorder.ini"
+        path = "data/setting.untactorder.ini"
         config.read(path)
         if 'SERVERINFO' not in config:
             config.add_section('SERVERINFO')
@@ -184,7 +186,6 @@ class PosServer(object):
     @classmethod
     def update_checker(cls):
         out("\nServer Program Version Info :")
-        v_file = os.path.dirname(os.path.abspath(__file__)) + "/resource/version.rc"
         with open(v_file, 'r') as f:
             rc = f.read().replace("\n", "")
             file_info = rc[rc.find("StringFileInfo"):rc.rfind("VarFileInfo")].replace(" ", "").replace("(u'", "('").replace(",u'", ", '")
@@ -226,7 +227,7 @@ class PosServer(object):
 
     def run_pos_main_ui(self):
         log("[SUBSTANCES] Run Pos Main UI.")
-        app = QtWidgets.QApplication(sys.argv)
+        app = QApplication(sys.argv)
         clear()
         ui = Ui_MainWindow(self.__customer_group.process_payment)
         app.exec_()

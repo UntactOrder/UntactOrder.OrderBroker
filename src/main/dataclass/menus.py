@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : PosServer.dataclass.menus & Last Modded : 2021.11.07. ###
+Coded with Python 3.10 Grammar by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ### Alias : PosServer.dataclass.menus & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
+Coded with Python 3.10 Grammar by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import os
 import datetime
@@ -66,11 +70,9 @@ class MenuList(object):
     """
 
     config = ConfigParser()
-    CONFIGPATH = os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/setting.untactorder.ini"
+    CONFIGPATH = "data/setting.untactorder.ini"
     __MENUS = []
-    _LOCATION = os.path.dirname(
-        os.path.abspath(os.path.dirname(os.path.abspath(__file__)))) + "/resource/data/menus.untactorder.db"
+    _LOCATION = "data/menus.untactorder.db"
     _COLUMNS_INIT = """(id integer PRIMARY KEY autoincrement,
      name text, price integer, type text, pinned integer, soldout integer, available integer)
      """
