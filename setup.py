@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : cx_Freeze setup.py & Last Modded : 2022.01.10. ###
+Coded with Python 3.10 Grammar by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import re
 import sys
 import subprocess

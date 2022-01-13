@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.networklayer.application & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : PosServer.network.application & Last Modded : 2021.11.07. ###
+Coded with Python 3.10 Grammar by IRACK000
 * <응용 계층>
 * 데이터 가공 매서드 호출.
 * qr 에서 테이블 번호 받기 -> 로그인 요청 -> 테이블 번호에 대해 비밀 번호 등록 여부 확인
@@ -32,8 +32,8 @@ Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
 *     "사이드": {"0": "2", "1": "1", "2": "1"}
 * }}
 * recv : respond = {"requested": {"method": "put", "uri": "new_order", "value": "202111182208"}, "respond": "success"}
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-from src.main.cli import log
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+from src.main.cli.apis import log
 from src.main.network.session import sokt_close
 import src.main.network.presentation as pr
 

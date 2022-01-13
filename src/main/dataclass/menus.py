@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : PosServer.dataclass.menus & Last Modded : 2021.11.07. ###
+Coded with Python 3.10 Grammar by IRACK000
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ### Alias : PosServer.dataclass.menus & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
+Coded with Python 3.10 Grammar by IRACK000
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 import os
 import datetime

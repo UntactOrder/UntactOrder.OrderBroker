@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-### Alias : PosServer.networklayer.session & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-참고: [java - python JSON 소켓 통신 프로그래밍] https://strawberry-smoothie.tistory.com/46
-참고: [Excuter] https://docs.python.org/ko/3.7/library/concurrent.futures.html
-               https://leo-bb.tistory.com/54
-               https://hamait.tistory.com/833
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : PosServer.network.session & Last Modded : 2021.11.07. ###
+Coded with Python 3.10 Grammar by IRACK000
+Description : ?
+Reference : [java - python JSON 소켓 통신 프로그래밍] https://strawberry-smoothie.tistory.com/46
+            [Excuter] https://docs.python.org/ko/3.7/library/concurrent.futures.html
+                      https://leo-bb.tistory.com/54
+                      https://hamait.tistory.com/833
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import time
 from concurrent.futures import ThreadPoolExecutor
 from socket import socket as Socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 
-from src.main.cli import log
+from src.main.cli.apis import log
 
 __server_socket = None
 __accept_terminated = False

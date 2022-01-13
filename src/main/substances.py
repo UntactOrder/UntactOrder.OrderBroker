@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ### Alias : PosServer.substances & Last Modded : 2021.11.07. ###
-Coded with Python 3.10 Grammar for Windows (CRLF) by IRACK000
-참고: [자동 시작] https://blog.naver.com/PostView.nhn?blogId=hunee726&logNo=220976778583&parentCategoryNo=&categoryNo=10&viewDate=&isShowPopularPosts=true&from=search
-                https://liveyourit.tistory.com/23
-참고: [gettext] https://minimilab.tistory.com/10
-참고: [PyQt5] https://wikidocs.net/21849
-             https://m.blog.naver.com/wjdrudtn0225/221999219060
-참고: [curses] https://stackoverflow.com/questions/8677627/getting-mouse-presses-on-a-console-window-for-python
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Coded with Python 3.10 Grammar by IRACK000
+Description : ?
+Reference : [자동 시작] https://blog.naver.com/PostView.nhn?blogId=hunee726&logNo=220976778583&parentCategoryNo=&categoryNo=10&viewDate=&isShowPopularPosts=true&from=search
+                       https://liveyourit.tistory.com/23
+            [gettext] https://minimilab.tistory.com/10
+            [PyQt5] https://wikidocs.net/21849
+                    https://m.blog.naver.com/wjdrudtn0225/221999219060
+            [curses] https://stackoverflow.com/questions/8677627/getting-mouse-presses-on-a-console-window-for-python
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import os
 import sys
 import time
@@ -20,7 +21,7 @@ from configparser import ConfigParser
 
 from src.main.gui.qt_core import QApplication
 
-from src.main.cli import *
+from src.main.cli.apis import *
 from src.main.gui.uis.windows.new_order_popup import run_order_popup
 from src.main.gui.uis.windows.main_ui_proto import Ui_MainWindow
 

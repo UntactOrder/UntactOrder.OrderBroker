@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-cx_Freeze & PyInstaller builder
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+### Alias : cx_Freeze & PyInstaller builder & Last Modded : 2022.01.10. ###
+Coded with Python 3.10 Grammar by IRACK000
 
 # PyInstaller 3.10.0 빌드 오류 해결 관련
 # https://github.com/pyinstaller/pyinstaller/issues/6301
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 import os
-import sys
 import platform
 
 
@@ -20,9 +20,8 @@ if __name__ == "__main__":
     elif platform.system() == "Linux":
         os.system("sudo apt-get install patchelf")
 
-    py_version = sys.version.split(" ")[0].split(".")
-    if int(py_version[0]) < 3 or int(py_version[1]) < 8 or (int(py_version[1]) == 8 and int(py_version[2]) < 10):
-        raise Exception("Python 3.8.10 or higher is required.")
+    from src.main.cli.apis import check_py_version  # 상대 경로 import; 파일 위치에 따라 코드가 수정 되어야 함.
+    check_py_version()
 
     version = input("\n1. 컴퓨터 기본 파이썬 버전(python)\n2. 파이썬 3.8.10(python3.8, Windows 7용)\n빌드에 사용할 파이썬 버전을 선택하세요. : ")
     py = "python"
