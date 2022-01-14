@@ -10,7 +10,7 @@ console_mode = False
 # CHECK PYSIDE VERSION
 PYSIDE_VERSION = ['PySide6.QtSvg', 'shiboken6']
 EXCLUDES = ['PySide6.QtNetwork', 'PySide6.QtQml']
-with open("src/main/qt_core.py", "rt", encoding='utf-8') as f:
+with open("src/main/gui/qt_core.py", "rt", encoding='utf-8') as f:
     for line in f.readlines():
         if "SUPPORT_WINDOWS_7" in line:
             if "True" in line:
