@@ -21,15 +21,21 @@ if "python" in sys.argv[-1]:
 # INCLUDE OR EXCLUDE MODULES
 PACKAGES = [*PYSIDE_VERSION]
 with open("requirements.txt", "rt", encoding='utf-8') as f:  # include
-    requirements = [re.split(r"[~=<>]", pkg)[0] for pkg in f.readlines() if pkg != '']
+    requirements = [re.split(r"[~=<>]", pkg)[0] for pkg in f.readlines() if pkg != '' and pkg != '\n']
     PACKAGES.extend(requirements)
 print("Included packages : ", PACKAGES)
 installed_packages = re.split(r"[\r\n]", subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).decode('utf-8'))
-EXCLUDES = {pkg.split('==')[0] for pkg in installed_packages if pkg != ''}
-EXCLUDES.add('tkinter')
-for pkg in PACKAGES:
-    EXCLUDES.remove(pkg)
-print("Excluded packages : ", EXCLUDES, end="\n\n")
+if input("\nWould you like to use requrations.txt for package exclusion? (y to yes) : ") == "y":
+    EXCLUDES = {pkg.split('==')[0] for pkg in installed_packages if pkg != ''}
+    EXCLUDES.add('tkinter')
+    for pkg in PACKAGES:
+        try:
+            EXCLUDES.remove(pkg)
+        except KeyError:
+            pass
+    print("Excluded packages : ", EXCLUDES, end="\n\n")
+else:
+    EXCLUDES = set()
 
 # ADD FILES
 FILES = ["res/"]
