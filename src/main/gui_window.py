@@ -271,8 +271,8 @@ class SplashWindow(QMainWindow, UiSplashWindow):
         self.dragPos = event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()
 
     def mouseMoveEvent(self, event):
-        self.move(self.pos() + event.globalPos() - self.dragPos)
-        self.dragPos = event.globalPos()
+        self.move(self.pos() + (event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()) - self.dragPos)
+        self.dragPos = event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()
         event.accept()
 
     # ==> APP FUNCTIONS

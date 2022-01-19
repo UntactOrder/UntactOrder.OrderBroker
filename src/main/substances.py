@@ -22,6 +22,7 @@ from configparser import ConfigParser
 from src.main.gui.qt_core import QApplication
 
 from src.main.cli.apis import *
+
 from src.main.gui.uis.windows.new_order_popup import run_order_popup
 from src.main.gui.uis.windows.main_ui_proto import Ui_MainWindow
 

@@ -27,19 +27,26 @@ from rich.live import Live
 
 install_traceback()
 
-if not os.path.isdir("data"):
-    os.mkdir("data")
-if not os.path.isdir("data/log"):
-    os.mkdir("data/log")
-sys.stderr = open("data/log/recent_run.log", "wt")
 
-theme = Theme({'success': "green", 'error': "bold red"})
-log_console = Console(theme=theme, record=True, stderr=True)
-console = Console(theme=theme)
-eprint = log_console.print
-log = log_console.log
-csprint = console.print
-cslog = console.log
+def logging_on():
+    if not os.path.isdir("data"):
+        os.mkdir("data")
+    if not os.path.isdir("data/log"):
+        os.mkdir("data/log")
+    sys.stderr = open("data/log/recent_run.log", "wt")
+
+    theme = Theme({'success': "green", 'error': "bold red"})
+    log_console = Console(theme=theme, record=True, stderr=True)
+    console = Console(theme=theme)
+    eprint = log_console.print
+    log = log_console.log
+    csprint = console.print
+    cslog = console.log
+    return log_console, console, eprint, log, csprint, cslog
+
+if os.environ.get('LOGGING') is not None and os.environ['LOGGING'] == "True":
+    log_console, console, eprint, log, csprint, cslog = logging_on()
+
 
 try:
     from msvcrt import getch

@@ -8,7 +8,7 @@ import time
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 
-from src.main.cli import log
+from src.main.cli.apis import log
 from src.main.dataclass.menus import MenuList
 from src.main.dataclass.orders import OrderList
 from src.main.network.session import sokt_close
