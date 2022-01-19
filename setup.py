@@ -25,7 +25,7 @@ with open("requirements.txt", "rt", encoding='utf-8') as f:  # include
     PACKAGES.extend(requirements)
 print("Included packages : ", PACKAGES)
 installed_packages = re.split(r"[\r\n]", subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).decode('utf-8'))
-if input("\nWould you like to use requrations.txt for package exclusion? (y to yes) : ") == "y":
+if input("\nWould you like to use requirements.txt for package exclusion? (y to yes) : ") == "y":
     EXCLUDES = {pkg.split('==')[0] for pkg in installed_packages if pkg != ''}
     EXCLUDES.add('tkinter')
     for pkg in PACKAGES:
