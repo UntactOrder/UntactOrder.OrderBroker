@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     os.system(f"{py} -m pip install wheel")
     os.system(f"{py} -m pip install --upgrade pip")
-    os.system(f"{py} -m pip install tinyaes " + ("PySide2" if version == "2" else "PySide6"))
+    os.system(f"{py} -m pip install tinyaes cryptography " + ("PySide2" if version == "2" else "PySide6"))
     if tool == "cx_Freeze":
         print("cx_Freeze 설치")
         os.system(f"{py} -m pip install cx_Freeze pywin32")

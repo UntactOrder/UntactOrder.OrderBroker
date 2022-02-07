@@ -27,14 +27,21 @@ with open("src/main/gui/qt_core.py", "rt", encoding='utf-8') as f:
 key_path = "build.key"
 if not os.path.isfile(key_path):
     print("ERROR: build.key not found", flush=True)
-    while True:
-        key = input("16자리 암호화 키를 입력하세요 : ")
-        if len(key) == 16:
-            with open(key_path, "wt", encoding='utf-8') as f:
-                f.write(key)
-            break
-        else:
-            print("ERROR: 입력된 키가 16자리가 아닙니다.")
+    if input("Do you want to create a new encryption key? (y to yes) : ") == 'y':
+        print("Generating new key...", flush=True)
+        from cryptography.fernet import Fernet
+        key = Fernet.generate_key().decode()[-16:]
+        with open(key_path, "wt", encoding='utf-8') as f:
+            f.write(key)
+    else:
+        while True:
+                key = input("16자리 암호화 키를 입력하세요 : ")
+                if len(key) == 16:
+                    with open(key_path, "wt", encoding='utf-8') as f:
+                        f.write(key)
+                    break
+                else:
+                    print("ERROR: 입력된 키가 16자리가 아닙니다.")
 with open("build.key", "rt", encoding='utf-8') as f:
     CRYPTO_KEY = f.read()
 block_cipher = pyi_crypto.PyiBlockCipher(key=CRYPTO_KEY)
