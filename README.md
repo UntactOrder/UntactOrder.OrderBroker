@@ -1,4 +1,4 @@
-# [EN]Untact Order: Non-Contact Order<br/>[KO]언택트 오더: 비대면 주문
+# [EN]UntactOrder: Non-Contact Order<br/>[KO]언택트오더: 비대면 주문
 UntactOrder POS Server(매장 포스기용 서버) <python 3.10, python 3.8.10(windows7)>
 
 
