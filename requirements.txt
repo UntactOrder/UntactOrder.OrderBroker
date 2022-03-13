@@ -1,6 +1,15 @@
-Flask~=2.0.2
+flask~=2.0.2
+werkzeug~=2.0.2
+click~=8.0.3
+jinja2~=3.0.3
+itsdangerous~=2.0.1
+colorama~=0.4.4
+markupsafe~=2.0.1
+waitress~=2.0.0
 
 rich~=10.14.0
-attrs~=21.2.0
+pygments~=2.11.2
+colorama~=0.4.4
+commonmark~=0.9.1
 
 pygame~=2.1.0

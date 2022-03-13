@@ -29,8 +29,8 @@ if '__main__' == __name__:  # IDE가 실행 단위로 판단하지 않도록 통
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from src.main.gui.qt_core import SUPPORT_WINDOWS_7
-from src.main.gui.qt_core import QMainWindow
 from src.main.gui.qt_core import QApplication
+from src.main.gui.qt_core import QMainWindow
 from src.main.gui.qt_core import QIcon
 from src.main.gui.qt_core import QTimer
 
@@ -42,7 +42,7 @@ from src.main.gui.core.json_settings import Settings
 # ///////////////////////////////////////////////////////////////
 from src.main.gui.core.functions import set_svg_icon
 from src.main.gui.uis.windows.main_window.functions_main_window import MainFunctions
-from src.main.cli.file_encryption import check_if_encrypted
+from src.main.cli.file_encryptor import check_if_encrypted
 
 # IMPORT PY ONE DARK WINDOWS
 # ///////////////////////////////////////////////////////////////
@@ -263,6 +263,17 @@ class SplashWindow(QMainWindow, UiSplashWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
         UiSplashWindow.adjust_window_position(self)  # adjust window position
+
+    # MOUSE CLICK EVENTS
+    # ///////////////////////////////////////////////////////////////
+    def mousePressEvent(self, event):
+        # SET DRAG POS WINDOW
+        self.dragPos = event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        self.move(self.pos() + (event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()) - self.dragPos)
+        self.dragPos = event.globalPos() if SUPPORT_WINDOWS_7 else event.globalPosition().toPoint()
+        event.accept()
 
     # ==> APP FUNCTIONS
     # ///////////////////////////////////////////////////////////////

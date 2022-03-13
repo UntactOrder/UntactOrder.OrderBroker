@@ -11,7 +11,7 @@ from src.main.gui.qt_core import Qt, QSize
 from src.main.gui.qt_core import QApplication
 from src.main.gui.qt_core import QIcon
 
-from src.main.cli import log, clear
+from src.main.cli.apis import log, clear
 
 MUSIC_PATH = "res/new_order_sound.mp3"
 
