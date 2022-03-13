@@ -16,7 +16,7 @@ if __name__ == "__main__":
         tool = "PyInstaller"
 
     if platform.system() == "Windows":
-        os.system("TITLE cx_Freeze builder")
+        os.system(f"TITLE {tool} builder")
     elif platform.system() == "Linux":
         os.system("sudo apt-get install patchelf")
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     os.system(f"{py} -m pip install wheel")
     os.system(f"{py} -m pip install --upgrade pip")
-    os.system(f"{py} -m pip install tinyaes " + ("PySide2" if version == "2" else "PySide6"))
+    os.system(f"{py} -m pip install tinyaes cryptography " + ("PySide2" if version == "2" else "PySide6"))
     if tool == "cx_Freeze":
         print("cx_Freeze 설치")
         os.system(f"{py} -m pip install cx_Freeze pywin32")
@@ -64,9 +64,9 @@ if __name__ == "__main__":
                 os.system(f"{py} -m pip install pyinstaller")
         else:
             os.system(f"{py} -m pip install pyinstaller")
-        # 새로운 build.spec 생성하려면 주석 처리된 것을 이용하세요.
+        # 새로운 setup.spec 생성하려면 주석 처리된 것을 이용하세요.
         # os.system(f"{py} -m PyInstaller -n newName --icon=icon.ico --hidden-import PySide6.QtSvg src/main/main.py --clean")
-        os.system(f"{py} -m PyInstaller build.spec --noconfirm")
+        os.system(f"{py} -m PyInstaller setup.spec --noconfirm")
 
     if version == "2":
         os.remove("src/main/gui/qt_core.py")

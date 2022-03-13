@@ -1,6 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
 import sys
+import re
+import subprocess
 
 
 debug_mode = False
@@ -10,7 +12,7 @@ console_mode = False
 # CHECK PYSIDE VERSION
 PYSIDE_VERSION = ['PySide6.QtSvg', 'shiboken6']
 EXCLUDES = ['PySide6.QtNetwork', 'PySide6.QtQml']
-with open("src/main/qt_core.py", "rt", encoding='utf-8') as f:
+with open("src/main/gui/qt_core.py", "rt", encoding='utf-8') as f:
     for line in f.readlines():
         if "SUPPORT_WINDOWS_7" in line:
             if "True" in line:
@@ -25,14 +27,21 @@ with open("src/main/qt_core.py", "rt", encoding='utf-8') as f:
 key_path = "build.key"
 if not os.path.isfile(key_path):
     print("ERROR: build.key not found", flush=True)
-    while True:
-        key = input("16자리 암호화 키를 입력하세요 : ")
-        if len(key) == 16:
-            with open(key_path, "wt", encoding='utf-8') as f:
-                f.write(key)
-            break
-        else:
-            print("ERROR: 입력된 키가 16자리가 아닙니다.")
+    if input("Do you want to create a new encryption key? (y to yes) : ") == 'y':
+        print("Generating new key...", flush=True)
+        from cryptography.fernet import Fernet
+        key = Fernet.generate_key().decode()[-16:]
+        with open(key_path, "wt", encoding='utf-8') as f:
+            f.write(key)
+    else:
+        while True:
+                key = input("16자리 암호화 키를 입력하세요 : ")
+                if len(key) == 16:
+                    with open(key_path, "wt", encoding='utf-8') as f:
+                        f.write(key)
+                    break
+                else:
+                    print("ERROR: 입력된 키가 16자리가 아닙니다.")
 with open("build.key", "rt", encoding='utf-8') as f:
     CRYPTO_KEY = f.read()
 block_cipher = pyi_crypto.PyiBlockCipher(key=CRYPTO_KEY)
@@ -100,16 +109,36 @@ with open('build/version.rc', 'wt', encoding='utf-8') as f:
     f.write(version)
 
 
+# INCLUDE OR EXCLUDE MODULES
+PACKAGES = [*PYSIDE_VERSION]
+with open("requirements.txt", "rt", encoding='utf-8') as f:  # include
+    requirements = [re.split(r"[~=<>]", pkg)[0] for pkg in f.readlines() if pkg != '' and pkg != '\n']
+    PACKAGES.extend(requirements)
+print("Included packages : ", PACKAGES)
+installed_packages = re.split(r"[\r\n]", subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).decode('utf-8'))
+if input("\nWould you like to use requirements.txt for package exclusion? (y to yes) : ") == "y":
+    EXCLUDES = {pkg.split('==')[0] for pkg in installed_packages if pkg != ''}
+    EXCLUDES.add('tkinter')
+    for pkg in PACKAGES:
+        try:
+            EXCLUDES.remove(pkg)
+        except KeyError:
+            pass
+    print("Excluded packages : ", EXCLUDES, end="\n\n")
+else:
+    EXCLUDES = set()
+
+
 # BUILD
-HIDDEN_IMPORTS = PYSIDE_VERSION + []  # write something in [] to import
-EXCLUDES = EXCLUDES + []  # write something in [] to exclude
+HIDDEN_IMPORTS = set(PYSIDE_VERSION + ['os', 'sys', 're'])  # write something in [] to import
+EXCLUDES = EXCLUDES | set([])  # write something in [] to exclude
 
 a = Analysis(
     ['src/main/main.py'],
     pathex=[],
     binaries=[],
-    datas=[('res/*', 'res')],
-    hiddenimports=HIDDEN_IMPORTS,
+    datas=[('res', 'res')],
+    hiddenimports=list(HIDDEN_IMPORTS),
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
