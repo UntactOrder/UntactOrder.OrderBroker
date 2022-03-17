@@ -32,7 +32,6 @@ INTERNAL_SERVER_ERROR = 500
 SERVICE_UNAVAILABLE = 503
 
 
-
 # TODO: Logging
 
 
@@ -54,15 +53,19 @@ class ForbiddenAccessError(Exception):
         super(ForbiddenAccessError, self).__init__(msg)
 
 
-
 # < Create Flask App ------------------------------------------------------------------------------------------------->
 def create_app():
     app = Flask(__name__)
 
-    service_denial_msg = "From 3:00 to 5:00, it is server inspection time. Sorry for the inconvenience. " \
+    service_denial_msg = "From 2:50 to 5:10, it is server inspection time. Sorry for the inconvenience. " \
                          "We would appreciate it if you could try again after the inspection."
-    service_denial_start = time(3, 0, 0, 0)
-    service_denial_end = time(5, 0, 0, 0)
+    service_denial_start = time(2, 50, 0, 0)
+    service_denial_end = time(5, 10, 0, 0)
+
+    break_time_msg = "From 5:10 to 5:30, it is store break time. Sorry for the inconvenience. " \
+                     "We would appreciate it if you could try again after the break."
+    break_time_start = time(15, 30, 0, 0)
+    break_time_end = time(16, 30, 0, 0)
 
     def server_status_noticer(func):
         def notice_service_denial(*args, **kwargs):
@@ -110,7 +113,31 @@ def create_app():
         """ To check if the server is running """
         return f"Hello, {request.environ.get('HTTP_X_REAL_IP', request.remote_addr)}!"
 
+    @app.put('/order')
+    def put_order():
+        """ Put order
+        :return: order token
+        """
+        token, personal_json = parse_json(request, {'order': str})
+        if token != ORDER_TOKEN:
+            raise UnauthorizedClientError(INVALID_ORDER_TOKEN_ERROR)
+        elif break_time_start <= datetime.now().time() <= break_time_end:
+            raise ForbiddenAccessError(break_time_msg)
+        else:
+            return jsonify({"token": ORDER_TOKEN})
 
+    @app.post('/table')
+    def check_table():
+        """ Post table
+        :return: table token
+        """
+        token, personal_json = parse_json(request, {'table': str})
+        if token != TABLE_TOKEN:
+            raise UnauthorizedClientError(INVALID_TABLE_TOKEN_ERROR)
+        elif service_denial_start <= datetime.now().time() <= service_denial_end:
+            raise ForbiddenAccessError(service_denial_msg)
+        else:
+            return jsonify({"token": TABLE_TOKEN})
 
     return app
 
