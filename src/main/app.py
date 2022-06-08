@@ -113,6 +113,96 @@ def create_app():
         """ To check if the server is running """
         return f"Hello, {request.environ.get('HTTP_X_REAL_IP', request.remote_addr)}!"
 
+    #
+    # process log in/out requests
+    #
+    @app.post('/sign')
+    @server_status_noticer
+    def process_sign_in_or_up() -> Response:
+        """ Process the sign in or sign up request (CUSTOMER) - POST method
+            Request:
+                Body = {token: user_order_token, password: MD5(table_password)}
+        """
+        parsed_json = parse_json(request)
+        ap.process_sign_in_or_up(parsed_json[0], **parsed_json[1])
+        result = ?
+        if result:
+            return jsonify({'status': "success"})
+        else:
+            404? 401?
+            return jsonify({'status': "success"})
+
+    @app.put('/sign')  # initial login process
+    @app.patch('/sign')  # additional login process
+    @server_status_noticer
+    def process_admin_sign_in_or_up() -> Response:
+        """ Process the sign in or sign up request (ADMIN) - POST method
+            Request:
+                if method is put:
+                    Body = {token: firebase_id_token, password: MD5(table_password)}
+                else:  # when method is patch
+                    Body = {main_token: firebase_id_token (main_token), token: firebase_id_token (additional_token),
+                            password: MD5(table_password)}
+            Response:
+                200 Login Success - Login Succeed
+                403 Forbidden     - Password Invalid
+                                  - Already Registered
+        """
+        parsed_json = parse_json(request)
+        ap.process_sign_in_or_up(parsed_json[0], **parsed_json[1])
+        result = ?
+        if result:
+            return jsonify({'status': "success"})
+        else:
+            403
+            return jsonify({'status': "success"})
+
+    @app.patch('/signout')
+    @app.patch('/sign_out')
+    @server_status_noticer
+    def process_sign_out() -> Response:
+        """ Process the sign out request (ADMIN, CUSTOMER) - POST method
+            * Check if the token belongs to ADMIN first.
+            * Customer will be able to sign out only when there's no order history in customer's table.
+            Request:
+                Body = {token: firebase_id_token, password: MD5(table_password)}
+        """
+        parsed_json = parse_json(request)
+        ap.process_sign_in_or_up(parsed_json[0], **parsed_json[1])
+        result = ?
+        if result:
+            return jsonify({'status': "success"})
+        else:
+            404? 401?
+            return jsonify({'status': "success"})
+
+    #
+    # process table order requests
+    #
+    @app.post('/table/<int:table_number>/status')
+    def get_table_status(table_number: int):
+        """ Get table status - POST method
+            Request:
+                Body = {token: firebase_id_token}
+            Response:
+                200 Not Found      ['status': 0]
+                200 Not Registered ['status': 1]
+                200 Not Ordered    ['status': 2]
+                200 Registered     ['status': 3]
+        """
+        return 0
+
+    @app.post('/table/<int:table_number>/order/')
+    @app.post('/table/<int:table_number>/order_history')
+    def get_table_order_history(table_number: int):
+        """ Get table order history - POST method
+            Request:
+                Body = {token: firebase_id_token}
+        """
+        return 0
+
+
+
     @app.put('/order')
     def put_order():
         """ Put order
@@ -121,8 +211,6 @@ def create_app():
         token, personal_json = parse_json(request, {'order': str})
         if token != ORDER_TOKEN:
             raise UnauthorizedClientError(INVALID_ORDER_TOKEN_ERROR)
-        elif break_time_start <= datetime.now().time() <= break_time_end:
-            raise ForbiddenAccessError(break_time_msg)
         else:
             return jsonify({"token": ORDER_TOKEN})
 
@@ -134,8 +222,6 @@ def create_app():
         token, personal_json = parse_json(request, {'table': str})
         if token != TABLE_TOKEN:
             raise UnauthorizedClientError(INVALID_TABLE_TOKEN_ERROR)
-        elif service_denial_start <= datetime.now().time() <= service_denial_end:
-            raise ForbiddenAccessError(service_denial_msg)
         else:
             return jsonify({"token": TABLE_TOKEN})
 
