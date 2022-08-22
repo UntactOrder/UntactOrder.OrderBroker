@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.compose") version "1.1.0"
+    id("org.jetbrains.compose")
     id("com.android.application")
     kotlin("android")
 }
@@ -9,19 +9,23 @@ version = "1.0"
 
 android {
     namespace = "io.github.untactorder.ui"
-    compileSdk = 33
-
+    compileSdk = rootProject.extra["android_target_sdk_version"] as Int?
+    buildToolsVersion = rootProject.extra["android_build_tool_version"] as String
+    testOptions {
+        unitTests.apply {
+            isReturnDefaultValues = true
+        }
+    }
     defaultConfig {
         applicationId = "io.github.untactorder.ui"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = rootProject.extra["android_min_sdk_version"] as Int?
+        targetSdk = rootProject.extra["android_target_sdk_version"] as Int?
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -48,25 +52,5 @@ android {
 
 dependencies {
     implementation(project(":layout"))
-    implementation(project(":shared"))
-
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
-    implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha15")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["compose_version"]}")
-
-    implementation("io.github.shashank02051997:FancyToast:2.0.1")
-
-    // Markdown - https://halilibo.com/compose-richtext/
-    implementation("com.halilibo.compose-richtext:richtext-commonmark:0.13.0")
-    implementation("com.halilibo.compose-richtext:richtext-ui-material3:0.13.0")
-
+    //implementation(project(":shared"))
 }

@@ -9,8 +9,8 @@ buildscript {
 
     repositories {
         gradlePluginPortal()
-        google()
         mavenCentral()
+        google()
     }
 
     dependencies {
@@ -28,7 +28,6 @@ allprojects {
         mavenCentral()
         mavenLocal()
         google()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 
         maven {
             setUrl("https://jitpack.io")
