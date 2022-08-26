@@ -7,8 +7,16 @@ plugins {
 group = "io.github.untactorder"
 version = "1.0"
 
+repositories {
+}
+
+dependencies {
+    implementation(project(":common"))
+    implementation("androidx.activity:activity-compose:1.5.1")
+}
+
 android {
-    namespace = "io.github.untactorder.ui"
+    namespace = "io.github.untactorder.orderbroker"
     compileSdk = rootProject.extra["android_target_sdk_version"] as Int?
     buildToolsVersion = rootProject.extra["android_build_tool_version"] as String
     testOptions {
@@ -17,11 +25,11 @@ android {
         }
     }
     defaultConfig {
-        applicationId = "io.github.untactorder.ui"
+        applicationId = "io.github.untactorder.orderbroker"
         minSdk = rootProject.extra["android_min_sdk_version"] as Int?
         targetSdk = rootProject.extra["android_target_sdk_version"] as Int?
         versionCode = 1
-        versionName = "1.0.0.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -33,8 +41,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -43,14 +51,9 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0-beta01"
+        kotlinCompilerExtensionVersion = rootProject.extra["compose_ext_version"] as String
     }
     packagingOptions {
         resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
-}
-
-dependencies {
-    implementation(project(":layout"))
-    //implementation(project(":shared"))
 }
