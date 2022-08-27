@@ -5,7 +5,10 @@ buildscript {
     extra["compose_ext_version"] = "1.3.0-beta01"
     extra["android_target_sdk_version"] = 33
     extra["android_min_sdk_version"] = 24
-    extra["android_build_tool_version"] = "33.0.0"
+    extra["android_build_tool_version"] = "33.0.3"
+
+    extra["organization"] = "io.github.untactorder"
+    extra["version"] = "1.0.0"
 
     repositories {
         gradlePluginPortal()
@@ -22,14 +25,11 @@ buildscript {
 
 plugins {
     /**
-     * Kotlin Gradle Plugin
+     * Compose Gradle Plugin
      * https://plugins.gradle.org/plugin/org.jetbrains.compose
      */
     id("org.jetbrains.compose").version("1.2.0-alpha01-dev770").apply(false)
 }
-
-group = "io.github.untactorder"
-version = "1.0"
 
 allprojects {
     repositories {

@@ -4,9 +4,6 @@ plugins {
     kotlin("android")
 }
 
-group = "io.github.untactorder"
-version = "1.0"
-
 repositories {
 }
 
@@ -16,7 +13,7 @@ dependencies {
 }
 
 android {
-    namespace = "io.github.untactorder.orderbroker"
+    namespace = rootProject.extra["organization"] as String? + ".orderbroker"
     compileSdk = rootProject.extra["android_target_sdk_version"] as Int?
     buildToolsVersion = rootProject.extra["android_build_tool_version"] as String
     testOptions {
@@ -25,14 +22,21 @@ android {
         }
     }
     defaultConfig {
-        applicationId = "io.github.untactorder.orderbroker"
+        applicationId = rootProject.extra["organization"] as String? + ".orderbroker"
         minSdk = rootProject.extra["android_min_sdk_version"] as Int?
         targetSdk = rootProject.extra["android_target_sdk_version"] as Int?
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = rootProject.extra["version"] as String?
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+    }
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/main/AndroidManifest.xml")
+            kotlin.srcDirs("src/main/kotlin")
+            res.srcDirs("src/main/res")
+        }
     }
     buildTypes {
         getByName("release") {

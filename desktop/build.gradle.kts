@@ -6,9 +6,6 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-group = "io.github.untactorder"
-version = "1.0"
-
 kotlin {
     jvm {
         compilations.all {
@@ -39,8 +36,8 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "jvm"
-            packageVersion = "1.0.0"
+            packageName = rootProject.extra["organization"] as String + ".orderbroker"
+            packageVersion = rootProject.extra["version"] as String
         }
     }
 }

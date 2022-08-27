@@ -6,9 +6,6 @@ plugins {
     id("com.android.library")
 }
 
-group = "io.github.untactorder"
-version = "1.0"
-
 kotlin {
     android()
 
