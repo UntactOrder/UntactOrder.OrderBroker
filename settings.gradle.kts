@@ -11,3 +11,4 @@ rootProject.name = "OrderBroker"
 include(":android")
 include(":desktop")
 include(":common")
+include(":shared")
