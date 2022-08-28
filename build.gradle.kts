@@ -3,9 +3,10 @@ buildscript {
     extra["ktor_version"] = "2.0.3"
     extra["junit_version"] = "5.9.0"
     extra["compose_ext_version"] = "1.3.0-beta01"
+    extra["moko_res_version"] = "0.20.1"
     extra["android_target_sdk_version"] = 33
     extra["android_min_sdk_version"] = 24
-    extra["android_build_tool_version"] = "33.0.3"
+    extra["android_build_tool_version"] = "33.0.0"
 
     extra["organization"] = "io.github.untactorder"
     extra["version"] = "1.0.0"
@@ -28,7 +29,12 @@ plugins {
      * Compose Gradle Plugin
      * https://plugins.gradle.org/plugin/org.jetbrains.compose
      */
-    id("org.jetbrains.compose").version("1.2.0-alpha01-dev770").apply(false)
+    id("org.jetbrains.compose").version("1.2.0-alpha01-dev770").apply(true)
+    /**
+     * Moko Resources
+     * https://github.com/icerockdev/moko-resources
+     */
+    id("dev.icerock.mobile.multiplatform-resources").version("0.20.1").apply(true)
 }
 
 allprojects {
