@@ -1,4 +1,4 @@
-package io.github.untactorder.orderbroker
+package io.github.untactorder.orderbroker.common
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
@@ -7,17 +7,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
+import io.github.untactorder.shared.ui.theme.UntactOrderApplicationTheme
 
 @Composable
 fun App() {
-    MaterialTheme {
+    UntactOrderApplicationTheme {
         var text by remember { mutableStateOf("Hello, World!") }
 
-        Button(onClick = {
+        Button(modifier = Modifier, onClick = {
             text = "Hello, ${getPlatformName()}"
         }) {
             Text(text)
         }
+        ItemContainer()
     }
 }

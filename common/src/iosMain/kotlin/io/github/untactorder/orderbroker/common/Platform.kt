@@ -1,4 +1,4 @@
-package io.github.untactorder.orderbroker
+package io.github.untactorder.orderbroker.common
 
 import platform.UIKit.UIDevice
 

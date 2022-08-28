@@ -1,4 +1,4 @@
-import io.github.untactorder.orderbroker.App
+import io.github.untactorder.orderbroker.common.App
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 

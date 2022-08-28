@@ -3,6 +3,7 @@ package io.github.untactorder.orderbroker
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import io.github.untactorder.orderbroker.common.App
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

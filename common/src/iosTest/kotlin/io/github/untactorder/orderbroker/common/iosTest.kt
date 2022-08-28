@@ -1,4 +1,4 @@
-package io.github.untactorder.orderbroker
+package io.github.untactorder.orderbroker.common
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
