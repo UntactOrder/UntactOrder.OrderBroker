@@ -9,7 +9,8 @@ repositories {
 
 dependencies {
     implementation(project(":common"))
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation(project(":shared"))
+    api("androidx.activity:activity-compose:1.5.1")
 }
 
 android {
